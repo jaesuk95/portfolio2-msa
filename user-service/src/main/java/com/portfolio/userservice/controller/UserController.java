@@ -1,13 +1,18 @@
 package com.portfolio.userservice.controller;
 
+import com.portfolio.userservice.controller.request.RequestUser;
+import com.portfolio.userservice.controller.response.ResponseUser;
+import com.portfolio.userservice.model.user.UserDto;
 import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -27,4 +32,18 @@ public class UserController {
                 + ", with token time=" + env.getProperty("token.expiration_time"));
     }
 
+    @PostMapping("/auth/registration")
+    public ResponseEntity<ResponseUser> userRegister(
+            @RequestBody RequestUser userPayload,
+            HttpServletRequest request) {
+
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        UserDto userDto = mapper.map(userPayload, UserDto.class);
+//        userService.createUser(userDto);
+
+        ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
+    }
 }
