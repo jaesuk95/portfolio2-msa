@@ -13,7 +13,7 @@ spring:
     config:
       server:
         git:
-          uri: file:///Users/jaesuk/IdeaProjects/msa/git-local-repo
+          uri: https://github.com/jaesuk95/portfolio2-msa/tree/master/cloud-config-git
 #          uri: https://github.com/jaesuk95/inflearn-spring-cloud-config.git
 #          private ? ??
 #          username: [username]
