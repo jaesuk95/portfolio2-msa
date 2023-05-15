@@ -1,0 +1,72 @@
+version: '3.8'
+services:
+  # discovery-service:
+  #   image: <discovery-service-image>
+  #   # Add necessary configuration
+  #   depends_on:
+  #     - mariadb-server
+
+  # apigateway-service:
+  #   image: <apigateway-service-image>
+  #   # Add necessary configuration
+  #   depends_on:
+  #     - discovery-service
+
+  # config-service:
+  #   image: <config-service-image>
+  #   # Add necessary configuration
+  #   depends_on:
+  #     - discovery-service
+
+  # user-service:
+  #   image: <user-service-image>
+  #   # Add necessary configuration
+  #   depends_on:
+  #     - discovery-service
+  #     - mariadb-server
+
+  # order-service:
+  #   image: <order-service-image>
+  #   # Add necessary configuration
+  #   depends_on:
+  #     - discovery-service
+  #     - mariadb-server
+
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - 15672:15672
+      - 5672:5672
+      - 15671:15671
+      - 5671:5671
+      - 4369:4369
+    networks:
+      - ecommerce-network
+
+  mariadb-server:
+    image: jaesuk95/my_mariadb:1.0
+    container_name: mariadb
+    # Add necessary configuration
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - 13306:3306
+    networks:
+      - ecommerce-network
+
+  # kafka:
+  #   image: wurstmeister/kafka
+  #   # Add necessary configuration
+
+  # zookeeper:
+  #   image: wurstmeister/zookeeper
+  #   # Add necessary configuration
+
+networks:
+  ecommerce-network:
+    external: true
