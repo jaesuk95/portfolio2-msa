@@ -26,12 +26,22 @@ public class UserEntity implements UserDetails {
     private String email;
     @Column(nullable = false, length = 50, unique = true)
     private String name;
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false, unique = true)
+    private String userId;
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(fetch = FetchType.LAZY)
     private final List<AddressEntity> address = new ArrayList<>();
+
+    public UserEntity(String email, String name, String password, String userId, Role role) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.userId = userId;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -62,5 +72,9 @@ public class UserEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

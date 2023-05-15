@@ -3,6 +3,7 @@ package com.portfolio.userservice.controller;
 import com.portfolio.userservice.controller.request.RequestUser;
 import com.portfolio.userservice.controller.response.ResponseUser;
 import com.portfolio.userservice.model.user.UserDto;
+import com.portfolio.userservice.model.user.UserService;
 import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final Environment env;
+    private final UserService userService;
 
     @GetMapping("/health_check")
     @Timed(value = "users.status", longTask = true) // prometheus 에 등록
@@ -41,9 +43,9 @@ public class UserController {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 
         UserDto userDto = mapper.map(userPayload, UserDto.class);
-//        userService.createUser(userDto);
+        UserDto userDtoReturn = userService.createUser(userDto);
 
-        ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
+        ResponseUser responseUser = mapper.map(userDtoReturn, ResponseUser.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
     }
 }

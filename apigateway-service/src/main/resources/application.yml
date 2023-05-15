@@ -38,6 +38,14 @@ spring:
           uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/product-service/**
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/login
+            - Method=POST
+
+
+#              /auth/registration
 management:
   endpoints:
     web:
