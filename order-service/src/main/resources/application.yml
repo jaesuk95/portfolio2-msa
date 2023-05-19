@@ -1,0 +1,74 @@
+server:
+  port: 0
+spring:
+  application:
+    name: order-service
+  datasource:
+    #    url: jdbc:h2:~/test
+    #    driver-class-name: org.h2.Driver
+    #    url: jdbc:h2:mem:testdb
+    #    username: sa
+    #    password:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/mydb
+#    username: root
+#    password: admin
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      dialect: org.hibernate.dialect.MySQL8Dialect
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    show-sql: true
+    #  jpa:
+    #    hibernate:
+    #      ddl-auto: create-drop
+    #    show-sql: true
+    #    generate-ddl: true
+    #    properties:
+    #      hibernate:
+    #        dialect: org.hibernate.dialect.H2Dialect
+    # script ??? hibernate ??? ?? ???? ?? ?? ??
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  instance:
+    #    loadBalancing technique
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+logging:
+  level:
+    com.example.orderservice: debug
+  pattern:
+    level: "%5p [TRACE_ID: %X{traceId:-}] [SPAN_ID: %X{spanId:-}]"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace, busrefresh, info, prometheus, metrics
+#  tracing:
+#    sampling:
+#      probability: 1.0
+#  zipkin:
+#    tracing:
+#      endpoint: http://localhost:9411/api/v2/spans
+#      endpoint: http://zipkin:9411/api/v2/spans

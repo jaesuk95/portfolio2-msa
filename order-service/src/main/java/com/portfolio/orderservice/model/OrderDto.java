@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
-public class OrderDto {
+public class OrderDto implements Serializable {
     private String productId;
     private Integer qty;
     private Integer unitPrice;
