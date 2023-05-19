@@ -4,6 +4,8 @@ import com.portfolio.orderservice.controller.request.RequestOrder;
 import com.portfolio.orderservice.controller.response.ResponseOrder;
 import com.portfolio.orderservice.message.kafka.producer.KafkaOrderProducer;
 import com.portfolio.orderservice.model.OrderDto;
+import com.portfolio.orderservice.model.OrderEntity;
+import com.portfolio.orderservice.model.OrderRepository;
 import com.portfolio.orderservice.model.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class OrderServiceImpl implements OrderService {
 
     private final KafkaOrderProducer kafkaOrderProducer;
+    private final OrderRepository orderRepository;
 
     @Override
     public ResponseOrder registerUserOrder(RequestOrder requestOrder, String userId) {
@@ -35,5 +38,10 @@ public class OrderServiceImpl implements OrderService {
         // send an order to kafka
         kafkaOrderProducer.send("orders", orderDto);
         return returnValue;
+    }
+
+    @Override
+    public Iterable<OrderEntity> getOrdersByUserId(String userId) {
+        return orderRepository.findByUserId(userId);
     }
 }
