@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apigateway-service
+spec:
+  selector:
+    matchLabels:
+      app: apigateway-service
+  template:
+    metadata:
+      labels:
+        app: apigateway-service
+    spec:
+      containers:
+      - name: apigateway-service
+        image: jaesuk95/portfolio-apigateway-service:latest
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: kube
+        ports:
+        - containerPort: 80
