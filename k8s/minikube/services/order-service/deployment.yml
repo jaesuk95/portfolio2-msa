@@ -22,5 +22,7 @@ spec:
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: kube
+          - name: EUREKA_CLIENT_ENABLED
+            value: "false"
         ports:
         - containerPort: 80
