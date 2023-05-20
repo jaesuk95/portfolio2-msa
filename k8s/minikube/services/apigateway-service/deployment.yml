@@ -15,16 +15,18 @@ spec:
       - name: apigateway-service
         image: jaesuk95/portfolio-apigateway-service:0.0.1
         imagePullPolicy: Always
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
         env:
           - name: SPRING_PROFILES_ACTIVE
             value: "dev"
           - name: EUREKA_CLIENT_ENABLED
             value: "false"
           - name: SPRING_RABBITMQ_HOST
-            value: "rabbitmq-management"
+            value: "rabbitmq"
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: "config-service"
         ports:
         - containerPort: 80
