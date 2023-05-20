@@ -83,5 +83,5 @@ management:
 #  clients.order-service.url=http://order-service
 app:
   order-service-url: http://127.0.0.1:8000/order-service
-  payment-service-url: http://payment-service
-  user-service-url: http://user-service
+  payment-service-url: http://127.0.0.1:8000/payment-service
+  user-service-url: http://127.0.0.1:8000/user-service
