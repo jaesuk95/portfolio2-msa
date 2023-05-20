@@ -1,4 +1,4 @@
-package com.portfolio.userservice.controller.config;
+package com.portfolio.userservice.config;
 
 import com.portfolio.userservice.model.user.UserService;
 import lombok.RequiredArgsConstructor;

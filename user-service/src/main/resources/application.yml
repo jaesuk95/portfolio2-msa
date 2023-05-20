@@ -1,8 +1,6 @@
 server:
   port: 0
 spring:
-  cloud:
-    kub
   application:
     name: user-service
   datasource:
@@ -73,3 +71,17 @@ management:
 #    tracing:
 #      endpoint: http://localhost:9411/api/v2/spans
 
+#client
+#clients:
+#  user-service:
+#    url: http://user-service
+#  order-service:
+#    url: http://order-service
+#  payment-service:
+#    url: http://payment-service
+#  clients.user-service.url=http://user-service
+#  clients.order-service.url=http://order-service
+app:
+  order-service-url: http://127.0.0.1:8000/order-service
+  payment-service-url: http://payment-service
+  user-service-url: http://user-service

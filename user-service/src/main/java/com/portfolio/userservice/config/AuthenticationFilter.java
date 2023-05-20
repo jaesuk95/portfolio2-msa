@@ -1,8 +1,8 @@
-package com.portfolio.userservice.controller.config;
+package com.portfolio.userservice.config;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.portfolio.userservice.controller.request.RequestLogin;
+import com.portfolio.userservice.request.RequestLogin;
 import com.portfolio.userservice.model.user.UserDto;
 import com.portfolio.userservice.model.user.UserService;
 import io.jsonwebtoken.Jwts;

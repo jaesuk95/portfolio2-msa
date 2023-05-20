@@ -1,4 +1,4 @@
-package com.portfolio.userservice.controller.request;
+package com.portfolio.userservice.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

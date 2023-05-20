@@ -1,4 +1,4 @@
-package com.portfolio.userservice.controller.response;
+package com.portfolio.userservice.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

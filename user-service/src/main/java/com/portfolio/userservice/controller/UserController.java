@@ -1,7 +1,7 @@
 package com.portfolio.userservice.controller;
 
-import com.portfolio.userservice.controller.request.RequestUser;
-import com.portfolio.userservice.controller.response.ResponseUser;
+import com.portfolio.userservice.request.RequestUser;
+import com.portfolio.userservice.response.ResponseUser;
 import com.portfolio.userservice.model.user.UserDto;
 import com.portfolio.userservice.model.user.UserService;
 import io.micrometer.core.annotation.Timed;

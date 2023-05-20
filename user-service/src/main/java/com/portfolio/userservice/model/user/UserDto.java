@@ -1,6 +1,6 @@
 package com.portfolio.userservice.model.user;
 
-import com.portfolio.userservice.controller.response.ResponseOrder;
+import com.portfolio.userservice.response.ResponseOrder;
 import lombok.Data;
 
 import java.util.Date;

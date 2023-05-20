@@ -1,4 +1,4 @@
-package com.portfolio.userservice.controller.config;
+package com.portfolio.userservice.config;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.timelimiter.TimeLimiterConfig;
