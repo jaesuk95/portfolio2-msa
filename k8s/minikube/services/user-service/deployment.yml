@@ -52,9 +52,11 @@ spec:
     spec:
       containers:
       - name: user-service
-        image: jaesuk95/portfolio-user-service:0.0.3
+        image: jaesuk95/portfolio-user-service:0.0.4
         imagePullPolicy: Always
         env:
+          - name: GREETING_MESSAGE
+            value: "testing"
           - name: SPRING_CLOUD_CONFIG_URI
             value: "http://config-service:8888"
           - name: EUREKA_CLIENT_ENABLED
