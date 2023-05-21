@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: apigateway-service
-        image: jaesuk95/portfolio-apigateway-service:0.0.1
+        image: jaesuk95/portfolio-apigateway-service:0.0.2
         imagePullPolicy: Always
         # resources:
         #   limits:
@@ -22,15 +22,20 @@ spec:
         env:
           # - name: SPRING_PROFILES_ACTIVE
           #   value: "dev"
-          # - name: EUREKA_CLIENT_ENABLED
-          #   value: "false"
+          - name: EUREKA_CLIENT_ENABLED
+            value: "true"
           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
             value: http://discovery-service:8761/eureka
-          # - name: EUREAK_INSTANCE_HOSTNAME
-          #   value: "http://discovery-service:8761"
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
           - name: SPRING_CLOUD_CONFIG_URI
             value: "http://config-service:8888"
         ports:
         - containerPort: 8000
+
+
+
+          # 10.110.84.222
+
+          # - name: EUREAK_INSTANCE_HOSTNAME
+          #   value: "http://discovery-service:8761"

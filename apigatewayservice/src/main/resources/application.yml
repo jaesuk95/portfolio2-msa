@@ -5,9 +5,9 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     prefer-ip-address: true
-    hostname: discovery-service
+#    hostname: discovery-service
   #    hostname: localhost
-#    ip-address: http://localhost:7878
+#    ip-address:
   client:
     register-with-eureka: true
     fetch-registry: true
@@ -19,15 +19,24 @@ spring:
   application:
     name: api-gateway-service
   rabbitmq:
-    host: 127.0.0.1
+    host: rabbit
     port: 5672
     username: guest
     password: guest
+
   cloud:
     gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true
       routes:
         - id: user-service
           uri: lb://USER-SERVICE
+#          uri: http://user-service:80
+#          "http://config-service:8888"
           predicates:
             - Path=/user-service/**
         - id: order-service
