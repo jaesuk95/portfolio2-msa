@@ -19,7 +19,7 @@ spring:
   application:
     name: api-gateway-service
   rabbitmq:
-    host: rabbit
+    host: localhost
     port: 5672
     username: guest
     password: guest
@@ -35,8 +35,6 @@ spring:
       routes:
         - id: user-service
           uri: lb://USER-SERVICE
-#          uri: http://user-service:80
-#          "http://config-service:8888"
           predicates:
             - Path=/user-service/**
         - id: order-service
