@@ -13,16 +13,18 @@ spec:
     spec:
       containers:
       - name: order-service
-        image: jaesuk95/portfolio-order-service:latest
+        image: jaesuk95/portfolio-order-service:0.0.2
         imagePullPolicy: Always
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         env:
-          - name: SPRING_PROFILES_ACTIVE
-            value: kube
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: "http://config-service:8888"
           - name: EUREKA_CLIENT_ENABLED
-            value: "false"
+            value: "true"
+          - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
+            value: "http://discovery-service:8761/eureka"
+          - name: SPRING_RABBITMQ_HOST
+            value: "rabbitmq"
+          - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+            value: "http://zipkin:9411/api/v2/spans"
         ports:
-        - containerPort: 80
+        - containerPort: 8080

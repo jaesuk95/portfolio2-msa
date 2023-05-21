@@ -28,10 +28,10 @@ spec:
           value: PLAINTEXT://kafka-broker:9092
         image: wurstmeister/kafka
         imagePullPolicy: IfNotPresent
-        # resources:
-        #   limits:
-        #     memory: "128Mi"
-        #     cpu: "500m"
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
         name: kafka-broker
         ports:
         - containerPort: 9092

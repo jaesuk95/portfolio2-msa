@@ -1,42 +1,3 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: user-service
-# spec:
-#   selector:
-#     matchLabels:
-#       app: user-service
-#   template:
-#     metadata:
-#       labels:
-#         app: user-service
-#     spec:
-#       containers:
-#       - name: user-service
-#         image: jaesuk95/portfolio-user-service:0.0.2
-#         imagePullPolicy: Always
-#         # resources:
-#         #   limits:
-#         #     memory: "128Mi"
-#         #     cpu: "500m"
-#         env:
-#           - name: SPRING_CLOUD_CONFIG_URI
-#             value: "http://config-service:8888"
-#           # - name: SPRING_PROFILES_ACTIVE
-#           #   value: dev
-#           - name: EUREKA_CLIENT_ENABLED
-#             value: "true"
-#           - name: EUREKA_INSTANCE_HOSTNAME
-#             value: "user-service"
-#           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
-#             value: "http://discovery-service:8761/eureka"
-#           - name: APP_USER-SERVICE-URL
-#             value: "http://user-service/user-service"
-#           - name: SPRING_RABBITMQ_HOST
-#             value: "rabbitmq"
-#         ports:
-#         - containerPort: 80
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -50,24 +11,26 @@ spec:
       labels:
         app: user-service
     spec:
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
       containers:
       - name: user-service
         image: jaesuk95/portfolio-user-service:0.0.4
         imagePullPolicy: Always
         env:
-          - name: GREETING_MESSAGE
-            value: "testing"
           - name: SPRING_CLOUD_CONFIG_URI
             value: "http://config-service:8888"
           - name: EUREKA_CLIENT_ENABLED
             value: "true"
-          # - name: EUREKA_INSTANCE_HOSTNAME
-          #   value: "user-service"
           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
             value: "http://discovery-service:8761/eureka"
           - name: APP_USER-SERVICE-URL
             value: "http://user-service/user-service"
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
+          - name: APP_ORDER-SERVICE-URL
+            value: "http://order-service/order-service"
         ports:
         - containerPort: 8080

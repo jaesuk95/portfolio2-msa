@@ -2,6 +2,7 @@ package com.portfolio.orderservice.config;
 
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -15,11 +16,15 @@ import java.util.HashMap;
 @Configuration
 public class KafkaConsumerConfig {
 
+    @Value("${app.kafka_listener}")
+    private String kafkaAddress;
+
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
         HashMap<String, Object> properties = new HashMap<>();
         // kafka container host
-        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+//        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaAddress);
 //        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "172.18.0.101:9092");
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "consumerGroupId");
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
