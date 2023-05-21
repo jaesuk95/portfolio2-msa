@@ -24,8 +24,10 @@ spec:
             value: "http://config-service:8888"
           # - name: SPRING_PROFILES_ACTIVE
           #   value: dev
-          - name: EUREKA_CLIENT_ENABLED
-            value: "false"
+          # - name: EUREKA_CLIENT_ENABLED
+          #   value: "false"
+          - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
+            value: http://discovery-service:8761/eureka
           - name: APP_USER-SERVICE-URL
             value: "http://user-service/user-service"
           - name: SPRING_RABBITMQ_HOST
