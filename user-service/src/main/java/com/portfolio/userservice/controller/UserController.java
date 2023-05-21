@@ -1,9 +1,9 @@
 package com.portfolio.userservice.controller;
 
-import com.portfolio.userservice.request.RequestUser;
-import com.portfolio.userservice.response.ResponseUser;
 import com.portfolio.userservice.model.user.UserDto;
 import com.portfolio.userservice.model.user.UserService;
+import com.portfolio.userservice.request.RequestUser;
+import com.portfolio.userservice.response.ResponseUser;
 import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
