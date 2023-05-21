@@ -33,9 +33,5 @@ spec:
         ports:
         - containerPort: 8000
 
-
-
-          # 10.110.84.222
-
           # - name: EUREAK_INSTANCE_HOSTNAME
           #   value: "http://discovery-service:8761"

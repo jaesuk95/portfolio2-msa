@@ -49,6 +49,7 @@ public class WebSecurity {
                                 .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll()     // local
                                 .requestMatchers(new IpAddressMatcher("192.168.0.4")).permitAll()   // through api-gateway
                                 .requestMatchers(new IpAddressMatcher("172.18.0.0/16")).permitAll() // through api-gateway docker container
+                                .requestMatchers(new IpAddressMatcher("10.100.147.106")).permitAll() // through api-gateway docker container
                                 .requestMatchers(PUBLIC_LIST).permitAll()
                                 .requestMatchers(WHITE_LIST).authenticated()
                                 .and()
