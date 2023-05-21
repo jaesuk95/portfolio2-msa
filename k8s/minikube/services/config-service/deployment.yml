@@ -24,4 +24,4 @@ spec:
             # value: "10.98.240.176"
             value: "rabbitmq"
         ports:
-        - containerPort: 80
+        - containerPort: 8888

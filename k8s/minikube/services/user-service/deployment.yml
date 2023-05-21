@@ -13,16 +13,22 @@ spec:
     spec:
       containers:
       - name: user-service
-        image: jaesuk95/portfolio-user-service:latest
+        image: jaesuk95/portfolio-user-service:0.0.1
         imagePullPolicy: Always
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
         env:
-          - name: SPRING_PROFILES_ACTIVE
-            value: kube
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: "http://config-service:8888"
+          # - name: SPRING_PROFILES_ACTIVE
+          #   value: dev
           - name: EUREKA_CLIENT_ENABLED
             value: "false"
+          - name: APP_USER-SERVICE-URL
+            value: "http://user-service/user-service"
+          - name: SPRING_RABBITMQ_HOST
+            value: "rabbitmq"
         ports:
         - containerPort: 80

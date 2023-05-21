@@ -6,6 +6,6 @@ spec:
   selector:
     app: apigateway-service
   ports:
-  - port: 80
-    targetPort: 80
+  - port: 8000
+    targetPort: 8000
   type: LoadBalancer

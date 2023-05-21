@@ -20,13 +20,13 @@ spec:
         #     memory: "128Mi"
         #     cpu: "500m"
         env:
-          - name: SPRING_PROFILES_ACTIVE
-            value: "dev"
+          # - name: SPRING_PROFILES_ACTIVE
+          #   value: "dev"
           - name: EUREKA_CLIENT_ENABLED
             value: "false"
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
           - name: SPRING_CLOUD_CONFIG_URI
-            value: "config-service"
+            value: "http://config-service:8888"
         ports:
         - containerPort: 80
