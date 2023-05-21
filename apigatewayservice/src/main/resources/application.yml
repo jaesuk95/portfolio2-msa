@@ -4,14 +4,16 @@ server:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-#    hostname: localhost
     prefer-ip-address: true
-#    ip-address: http://localhost
+    hostname: discovery-service
+  #    hostname: localhost
+#    ip-address: http://localhost:7878
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+#      defaultZone: http://discovery-service.discovery-service.default.svc.cluster.local:8761/eureka
 
 spring:
   application:

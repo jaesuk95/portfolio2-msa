@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apigateway-service
+  name: discovery-service
 spec:
   selector:
     matchLabels:
-      app: apigateway-service
+      app: discovery-service
   template:
     metadata:
       labels:
-        app: apigateway-service
+        app: discovery-service
     spec:
       containers:
-      - name: apigateway-service
-        image: jaesuk95/portfolio-apigateway-service:0.0.1
+      - name: discovery-service
+        image: jaesuk95/portfolio-discovery-service:0.0.1
         imagePullPolicy: Always
         # resources:
         #   limits:
@@ -24,13 +24,9 @@ spec:
           #   value: "dev"
           # - name: EUREKA_CLIENT_ENABLED
           #   value: "false"
-          - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
-            value: http://discovery-service:8761/eureka
-          # - name: EUREAK_INSTANCE_HOSTNAME
-          #   value: "http://discovery-service:8761"
-          - name: SPRING_RABBITMQ_HOST
-            value: "rabbitmq"
+          # - name: SPRING_RABBITMQ_HOST
+          #   value: "rabbitmq"
           - name: SPRING_CLOUD_CONFIG_URI
             value: "http://config-service:8888"
         ports:
-        - containerPort: 8000
+        - containerPort: 8761
