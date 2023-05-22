@@ -1,12 +1,12 @@
 package com.portfolio.productservice.model.product.clothes;
 
+import com.portfolio.productservice.controller.response.ResponseClothes;
 import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
-
-import java.awt.print.Pageable;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ClothesService {
     ClothesDto registerClothes(ClothesDto requestClothes);
 
-    List<ClothesDto> viewAllClothes(Pageable pageable);
+    Page<ResponseClothes> viewAllClothes(Pageable pageable);
 }

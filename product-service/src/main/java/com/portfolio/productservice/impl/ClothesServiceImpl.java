@@ -1,14 +1,17 @@
 package com.portfolio.productservice.impl;
 
+import com.portfolio.productservice.controller.response.ResponseClothes;
 import com.portfolio.productservice.model.product.clothes.*;
 import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,7 @@ import java.util.List;
 public class ClothesServiceImpl implements ClothesService {
 
     private final ClothesRepository clothesRepository;
+    private final ClothesQueryDslRepository clothesQueryDslRepository;
 
     @Override
     public ClothesDto registerClothes(ClothesDto clothesDto) {
@@ -28,8 +32,8 @@ public class ClothesServiceImpl implements ClothesService {
                 clothesDto.getCompanyRegistered(),
                 clothesDto.getStock(),
                 LocalDateTime.now(),
-                ClothesType.valueOf(clothesDto.getClothesType()),
-                LengthType.valueOf(clothesDto.getLengthType()),
+                clothesDto.getClothesType(),
+                clothesDto.getLengthType(),
                 clothesDto.getPrice()
         );
 
@@ -40,11 +44,21 @@ public class ClothesServiceImpl implements ClothesService {
     }
 
     @Override
-    public List<ClothesDto> viewAllClothes(Pageable pageable) {
-//        clothesQueryDslRepository.getClothes(pageable);
-        List<ClothesDto> objects = new ArrayList<>();
-        return objects;
+    public Page<ResponseClothes> viewAllClothes(Pageable pageable) {
+        Page<ClothesDto> clothesDto = clothesQueryDslRepository.getClothes(pageable);
+
+        List<ResponseClothes> responseList = new ArrayList<>();
+
+        clothesDto.forEach(v -> {
+            ModelMapper modelMapper = new ModelMapper();
+            modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+            ResponseClothes responseClothesMapped = modelMapper.map(v, ResponseClothes.class);
+            responseList.add(responseClothesMapped);
+        });
+
+        PageImpl<ResponseClothes> responseClothesPage = new PageImpl<>(responseList, clothesDto.getPageable(), clothesDto.getTotalPages());
+        return responseClothesPage;
     }
 
-    private final ClothesQueryDslRepository clothesQueryDslRepository;
+
 }
