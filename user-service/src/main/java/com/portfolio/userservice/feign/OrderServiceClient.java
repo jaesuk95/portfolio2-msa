@@ -10,7 +10,7 @@ import java.util.List;
 //@FeignClient(name = "order-service")
 @FeignClient(
         name = "order-service",
-        url = "${app.order-service-url}"
+        url = "${app.orderurl}"
 )
 public interface OrderServiceClient {
 //    @GetMapping("/order-service/{userId}/orders")

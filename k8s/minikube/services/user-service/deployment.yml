@@ -17,7 +17,7 @@ spec:
         #     cpu: "500m"
       containers:
       - name: user
-        image: jaesuk95/portfolio-user-service:0.0.6
+        image: jaesuk95/portfolio-user-service:0.0.7
         imagePullPolicy: Always
         env:
           - name: SPRING_CLOUD_CONFIG_URI
@@ -35,7 +35,13 @@ spec:
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
 
-          - name: APP_ORDER-SERVICE-URL
+          - name: APP_ORDERURL
             value: "http://order/order-service"
+
+          - name: APP_USERURL
+            value: "http://user/user-service"
+
+          - name: APP_PAYMENTURL
+            value: "http://payment/payment-service"
         ports:
         - containerPort: 8080
