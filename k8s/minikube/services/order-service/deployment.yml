@@ -34,14 +34,5 @@ spec:
           - name: APP_KAFKAURL
             value: "10.107.54.84:9092"
 
-          - name: APP_ORDERURL
-            value: "http://order/order-service"
-
-          - name: APP_USERURL
-            value: "http://user/user-service"
-
-          - name: APP_PAYMENTURL
-            value: "http://payment/payment-service"
-
         ports:
         - containerPort: 8080
