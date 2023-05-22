@@ -1,6 +1,7 @@
 package com.portfolio.userservice.model.user;
 
 import com.portfolio.userservice.model.address.AddressEntity;
+import com.portfolio.userservice.model.company.Company;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,8 +33,16 @@ public class UserEntity implements UserDetails {
     private String userId;
     @Enumerated(EnumType.STRING)
     private Role role;
+
     @OneToMany(fetch = FetchType.LAZY)
-    private final List<AddressEntity> address = new ArrayList<>();
+    private List<Company> companies = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<AddressEntity> address = new ArrayList<>();
+
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
+    }
 
     public UserEntity(String email, String name, String password, String userId, Role role) {
         this.email = email;

@@ -1,5 +1,6 @@
 package com.portfolio.userservice.model.user;
 
+import com.portfolio.userservice.response.ResponseCompany;
 import com.portfolio.userservice.response.ResponseOrder;
 import lombok.Data;
 
@@ -15,5 +16,6 @@ public class UserDto {
     private Date createdAt;
 
     private List<ResponseOrder> orders;
+    private List<ResponseCompany> companies;
 
 }

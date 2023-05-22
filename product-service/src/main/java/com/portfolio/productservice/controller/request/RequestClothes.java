@@ -12,8 +12,6 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 public class RequestClothes {
-    private String brandName;
-    private String companyRegistered;
     private Integer stock;
     private LocalDateTime registeredDate;
     @Enumerated(EnumType.STRING)
@@ -21,4 +19,5 @@ public class RequestClothes {
     @Enumerated(EnumType.STRING)
     private ClothesType clothesType;
     private int price;
+    private String userId;
 }

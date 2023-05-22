@@ -1,8 +1,11 @@
 package com.portfolio.userservice.controller;
 
+import com.portfolio.userservice.model.company.CompanyDto;
 import com.portfolio.userservice.model.user.UserDto;
 import com.portfolio.userservice.model.user.UserService;
+import com.portfolio.userservice.request.RequestCompany;
 import com.portfolio.userservice.request.RequestUser;
+import com.portfolio.userservice.response.ResponseCompany;
 import com.portfolio.userservice.response.ResponseUser;
 import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpServletRequest;
@@ -66,5 +69,23 @@ public class UserController {
         return String.format("order url = " + order_url +
                 ", user url = " + user_url +
                 ", payment url = " + payment_url);
+    }
+
+    @PostMapping("/register/company")
+    public ResponseEntity<ResponseCompany> registerCompany(@RequestBody RequestCompany requestCompany) {
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+
+        CompanyDto companyDto = mapper.map(requestCompany, CompanyDto.class);
+        ResponseCompany responseCompany = userService.registerCompany(companyDto);
+        return ResponseEntity.status(HttpStatus.OK).body(responseCompany);
+    }
+
+    @GetMapping("/{userId}/company")
+    public ResponseEntity<ResponseUser> companyValidation(@PathVariable String userId) {
+        log.info("user-service before acquiring data");
+        ResponseUser responseUser = userService.validateCompanyOwner(userId);
+        log.info("user-service after acquiring data");
+        return ResponseEntity.status(HttpStatus.OK).body(responseUser);
     }
 }
