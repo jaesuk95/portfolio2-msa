@@ -57,4 +57,14 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
+
+    @GetMapping("/check")
+    public String check() {
+        String order_url = env.getProperty("app.orderurl");
+        String user_url = env.getProperty("app.userurl");
+        String payment_url = env.getProperty("app.paymenturl");
+        return String.format("order url = " + order_url +
+                ", user url = " + user_url +
+                ", payment url = " + payment_url);
+    }
 }

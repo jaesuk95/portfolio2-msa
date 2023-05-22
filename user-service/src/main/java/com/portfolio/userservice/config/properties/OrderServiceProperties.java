@@ -8,7 +8,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @ConfigurationProperties(prefix = "app")
 public class OrderServiceProperties {
-    private String user_service_url;
-    private String order_service_url;
-    private String payment_service_url;
+    private String userurl;
+    private String orderurl;
+    private String paymenturl;
+//    private String user_service_url;
+//    private String order_service_url;
+//    private String payment_service_url;
+
+    private String kafkaurl;
 }

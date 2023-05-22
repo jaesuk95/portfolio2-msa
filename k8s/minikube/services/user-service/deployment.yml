@@ -17,7 +17,7 @@ spec:
         #     cpu: "500m"
       containers:
       - name: user
-        image: jaesuk95/portfolio-user-service:0.0.7
+        image: jaesuk95/portfolio-user-service:0.0.9
         imagePullPolicy: Always
         env:
           - name: SPRING_CLOUD_CONFIG_URI
@@ -29,19 +29,18 @@ spec:
           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
             value: "http://discovery-service:8761/eureka"
 
-          - name: APP_USER-SERVICE-URL
-            value: "http://user/user-service"
-
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
 
           - name: APP_ORDERURL
-            value: "http://order/order-service"
+            # value: "http://10.98.37.63:80"
+            value: "order-service"
 
           - name: APP_USERURL
-            value: "http://user/user-service"
+            # value: "http://10.111.129.100:80"
+            value: "user-service"
 
-          - name: APP_PAYMENTURL
-            value: "http://payment/payment-service"
+          # - name: APP_PAYMENTURL
+          #   value: "http://payment/payment-service"
         ports:
         - containerPort: 8080

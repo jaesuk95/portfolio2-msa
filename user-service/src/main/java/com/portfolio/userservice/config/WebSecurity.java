@@ -33,7 +33,9 @@ public class WebSecurity {
             "/user-service/welcome",
             "/user-service/health_check",
             "/auth/registration",
-            "/user-service/auth/registration"
+            "/user-service/auth/registration",
+            "/user-service/check",
+            "/check"
     };
 
     private static final String[] WHITE_LIST = {

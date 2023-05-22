@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -96,8 +97,6 @@ public class UserServiceImpl implements UserService {
         CircuitBreaker circuitbreaker = circuitBreakerFactory.create("circuitBreaker");
         List<ResponseOrder> orderList = circuitbreaker.run(() -> orderServiceClient.getOrders(userId),
                 throwable -> new ArrayList<>());    // <- throwable -> new ArrayList<>() 이 코드의 뜻은, orderServiceClient.getOrders(id) 에서 오류가 발생하면 비어있는 arrayList[] 으로 반환한다는 뜻이다.
-// GET http://order-service/order-service/bbea6daf-87bc-431d-857c-47413e688081/orders HTTP/1.1
-// GET http://order-service/43a2be4c-d94a-404b-9c37-c8bdaa63ba43/orders HTTP/1.1
         log.info("After called orders microservice");
         userDto.setOrders(orderList);
         return userDto;

@@ -88,7 +88,7 @@ management:
 #  payment-service-url: http://127.0.0.1:8000/payment-service
 #  user-service-url: http://127.0.0.1:8000/user-service
 app:
-  userurl: http://127.0.0.1:8000/user-service
-  orderurl: http://127.0.0.1:8000/order-service
-  paymenturl: http://127.0.0.1:8000/payment-service
+  userurl: http://127.0.0.1:8000
+  orderurl: http://127.0.0.1:8000
+  paymenturl: http://127.0.0.1:8000
   kafkaurl: 127.0.0.1:9092
