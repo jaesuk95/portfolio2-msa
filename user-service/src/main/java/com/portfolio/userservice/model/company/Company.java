@@ -1,5 +1,6 @@
 package com.portfolio.userservice.model.company;
 
+import com.portfolio.userservice.model.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,9 +23,14 @@ public class Company {
     private String companyName;
     private String brandName;
 
-    public Company(String companyName, String brandName) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ENTITY_ID")
+    private UserEntity userEntity;
+
+    public Company(String companyName, String brandName, UserEntity userEntity) {
         this.companyName = companyName;
         this.brandName = brandName;
+        this.userEntity = userEntity;
         this.companyId = UUID.randomUUID().toString();
         this.registerDate = LocalDateTime.now();
     }

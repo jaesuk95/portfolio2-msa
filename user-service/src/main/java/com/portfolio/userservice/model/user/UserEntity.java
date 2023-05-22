@@ -34,7 +34,7 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity")
     private List<Company> companies = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY)

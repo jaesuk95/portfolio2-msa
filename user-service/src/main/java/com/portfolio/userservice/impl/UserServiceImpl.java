@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("User not found");
         }
 
-        Company company = new Company(companyDto.getCompanyName(), companyDto.getBrandName());
+        Company company = new Company(companyDto.getCompanyName(), companyDto.getBrandName(), userEntity);
         companyRepository.save(company);
 
         ModelMapper mapper = new ModelMapper();
