@@ -2,7 +2,6 @@ package com.portfolio.productservice.controller;
 
 import com.portfolio.productservice.controller.request.RequestClothes;
 import com.portfolio.productservice.controller.response.ResponseClothes;
-import com.portfolio.productservice.model.product.clothes.ClothesEntity;
 import com.portfolio.productservice.model.product.clothes.ClothesService;
 import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
 import io.micrometer.core.annotation.Timed;
@@ -15,6 +14,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.awt.print.Pageable;
+import java.util.List;
 
 @RestController
 @RequestMapping("/product-service")
@@ -38,11 +40,23 @@ public class ProductServiceController {
     @PostMapping("/clothes")
     public ResponseEntity<ResponseClothes> registerClothes(
             HttpServletRequest request, @RequestBody RequestClothes requestClothes) {
-        ClothesDto clothesDto = clothesService.registerClothes(requestClothes);
         ModelMapper mapper = new ModelMapper();
+        ClothesDto clothesDto = mapper.map(requestClothes, ClothesDto.class);
+
+        ClothesDto clothesDtoReturn = clothesService.registerClothes(clothesDto);
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        ResponseClothes returnValue = mapper.map(clothesDto, ResponseClothes.class);
+        ResponseClothes returnValue = mapper.map(clothesDtoReturn, ResponseClothes.class);
         return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
     }
 
+    @GetMapping("/public/clothes/all")
+    public ResponseEntity<List<ResponseClothes>> viewAllClothes(
+            Pageable pageable, HttpServletRequest request) {
+        ModelMapper mapper = new ModelMapper();
+        List<ClothesDto> clothesDtoList = clothesService.viewAllClothes(pageable);
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+//        ResponseClothes returnValue = mapper.map(clothesDtoReturn, ResponseClothes.class);
+//        mapper.map();
+        return null;
+    }
 }

@@ -1,4 +1,4 @@
-package com.portfolio.productservice.model.product.clothes;
+package com.portfolio.productservice.model.product.shoes;
 
 import com.portfolio.productservice.model.product.ProductEntity;
 import jakarta.persistence.*;
@@ -7,16 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "clothes")
+@Table(name = "shoes")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClothesEntity extends ProductEntity {
+@PrimaryKeyJoinColumn(name = "ID")      // product 의 아이디를 참조한다.
+@DiscriminatorValue("PRODUCT_SHOES")
+public class Shoes extends ProductEntity {
 
     @Enumerated(EnumType.STRING)
-    private ClothesType clothesType;
-
-    @Enumerated(EnumType.STRING)
-    private LengthType lengthType;
-
+    private ShoesType shoesType;
 }
