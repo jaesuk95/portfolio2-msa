@@ -22,14 +22,20 @@ spec:
         env:
           # - name: SPRING_PROFILES_ACTIVE
           #   value: "dev"
+          # - name: EUREKA_INSTANCE_HOSTNAME
+          #   value: "user-service"
           - name: EUREKA_CLIENT_ENABLED
             value: "true"
+
           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
             value: http://discovery-service:8761/eureka
+
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
+
           - name: SPRING_CLOUD_CONFIG_URI
             value: "http://config-service:8888"
+            
         ports:
         - containerPort: 8000
 

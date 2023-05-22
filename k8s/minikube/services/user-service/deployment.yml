@@ -1,36 +1,41 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service
+  name: user
 spec:
   selector:
     matchLabels:
-      app: user-service
+      app: user
   template:
     metadata:
       labels:
-        app: user-service
+        app: user
     spec:
         # resources:
         #   limits:
         #     memory: "128Mi"
         #     cpu: "500m"
       containers:
-      - name: user-service
-        image: jaesuk95/portfolio-user-service:0.0.4
+      - name: user
+        image: jaesuk95/portfolio-user-service:0.0.6
         imagePullPolicy: Always
         env:
           - name: SPRING_CLOUD_CONFIG_URI
             value: "http://config-service:8888"
+            
           - name: EUREKA_CLIENT_ENABLED
             value: "true"
+
           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
             value: "http://discovery-service:8761/eureka"
+
           - name: APP_USER-SERVICE-URL
-            value: "http://user-service/user-service"
+            value: "http://user/user-service"
+
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
+
           - name: APP_ORDER-SERVICE-URL
-            value: "http://order-service/order-service"
+            value: "http://order/order-service"
         ports:
         - containerPort: 8080

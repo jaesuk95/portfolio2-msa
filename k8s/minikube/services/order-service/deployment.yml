@@ -1,30 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order-service
+  name: order
 spec:
   selector:
     matchLabels:
-      app: order-service
+      app: order
   template:
     metadata:
       labels:
-        app: order-service
+        app: order
     spec:
       containers:
-      - name: order-service
-        image: jaesuk95/portfolio-order-service:0.0.2
+      - name: order
+        image: jaesuk95/portfolio-order-service:0.0.7
         imagePullPolicy: Always
         env:
           - name: SPRING_CLOUD_CONFIG_URI
             value: "http://config-service:8888"
+
           - name: EUREKA_CLIENT_ENABLED
             value: "true"
+
           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
             value: "http://discovery-service:8761/eureka"
+
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
+
           - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
             value: "http://zipkin:9411/api/v2/spans"
+
+          - name: APP_KAFKAURL
+            value: "10.107.54.84:9092"
+
+          - name: APP_ORDERURL
+            value: "http://order/order-service"
+
+          - name: APP_USERURL
+            value: "http://user/user-service"
+
+          - name: APP_PAYMENTURL
+            value: "http://payment/payment-service"
+
         ports:
         - containerPort: 8080

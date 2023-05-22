@@ -4,6 +4,7 @@ import com.portfolio.orderservice.controller.request.RequestOrder;
 import com.portfolio.orderservice.controller.response.ResponseOrder;
 import com.portfolio.orderservice.model.OrderEntity;
 import com.portfolio.orderservice.model.OrderService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -22,6 +23,12 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+
+    @GetMapping("/welcome")
+    public String welcome() {
+        log.info("welcome message sent");
+        return "welcome message sent";
+    }
 
     @PostMapping("/{userId}/order")
     public ResponseEntity<ResponseOrder> createOrder(

@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.IpAddressMatcher;
 
 @Configuration
@@ -47,10 +48,7 @@ public class WebSecurity {
                     try {
                         authorize
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll()     // local
-                                .requestMatchers(new IpAddressMatcher("192.168.0.4")).permitAll()   // through api-gateway
-                                .requestMatchers(new IpAddressMatcher("172.18.0.0/16")).permitAll() // through api-gateway docker container
-//                                .requestMatchers(new IpAddressMatcher("10.100.147.106")).permitAll() // through api-gateway docker container
+                                .requestMatchers(new AntPathRequestMatcher("/user-service/**")).permitAll()
                                 .requestMatchers(PUBLIC_LIST).permitAll()
                                 .requestMatchers(WHITE_LIST).authenticated()
                                 .and()
@@ -62,6 +60,11 @@ public class WebSecurity {
         );
         return http.build();
     }
+//                                .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll()     // local
+//                                .requestMatchers(new IpAddressMatcher("192.168.0.4")).permitAll()   // through api-gateway
+//                                .requestMatchers(new IpAddressMatcher("172.18.0.0/16")).permitAll() // through api-gateway docker container
+//                                .requestMatchers(new IpAddressMatcher("10.109.113.170")).permitAll() // through api-gateway loadbalancer (minikube)
+    //                                .requestMatchers(new IpAddressMatcher("10.100.147.106")).permitAll() // through api-gateway docker container
     public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
         return auth.build();

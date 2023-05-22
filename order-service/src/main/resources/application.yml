@@ -76,7 +76,7 @@ management:
 #      endpoint: http://zipkin:9411/api/v2/spans
 
 app:
-  order-service-url: http://127.0.0.1:8000/order-service
-  payment-service-url: http://127.0.0.1:8000/payment-service
-  user-service-url: http://127.0.0.1:8000/user-service
-  kafka_listener: 127.0.0.1:9092
+  userurl: http://127.0.0.1:8000/user-service
+  orderurl: http://127.0.0.1:8000/order-service
+  paymenturl: http://127.0.0.1:8000/payment-service
+  kafkaurl: 127.0.0.1:9092

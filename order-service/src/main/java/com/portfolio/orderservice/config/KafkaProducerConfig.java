@@ -15,13 +15,14 @@ import java.util.HashMap;
 public class KafkaProducerConfig {
 
     // kafka producer configuration
-    @Value("${app.kafka_listener}")
-    private String kafkaAddress;
+//    @Value("${app.kafkaurl}")
+//    private String kafkaAddress;
     @Bean
     public ProducerFactory<String,String> producerFactory() {
         HashMap<String, Object> configProps = new HashMap<>();
 //        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
-        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaAddress);
+        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "10.107.54.84:9092");
+//        configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "kafka-service:9092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return new DefaultKafkaProducerFactory<>(configProps);
