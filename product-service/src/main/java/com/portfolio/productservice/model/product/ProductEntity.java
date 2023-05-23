@@ -28,6 +28,10 @@ public class ProductEntity {
     private String companyName;
     private String productId;
 
+    public void purchaseUpdate(int stock) {
+        this.stock -= stock;
+    }
+
     public ProductEntity(int stock, LocalDateTime registeredDate, int price, String userId, String companyName, String productId) {
         this.stock = stock;
         this.registeredDate = registeredDate;

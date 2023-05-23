@@ -25,4 +25,5 @@ public class Payload {
     private String user_id;
     private String company_name;
     private String product_id;
+    private Integer qty;
 }
