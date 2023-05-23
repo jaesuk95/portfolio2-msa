@@ -5,6 +5,7 @@ import com.portfolio.orderservice.controller.response.ResponseOrder;
 import com.portfolio.orderservice.controller.response.ResponseProduct;
 import com.portfolio.orderservice.feign.ProductServiceClient;
 import com.portfolio.orderservice.message.kafka.producer.KafkaOrderProducer;
+import com.portfolio.orderservice.message.kafka.producer.KafkaProductProducer;
 import com.portfolio.orderservice.model.OrderDto;
 import com.portfolio.orderservice.model.OrderEntity;
 import com.portfolio.orderservice.model.OrderRepository;
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CircuitBreakerFactory circuitBreakerFactory;
     private final ProductServiceClient productServiceClient;
+    private final KafkaProductProducer kafkaProductProducer;
 
     @Override
     public ResponseOrder registerUserOrder(RequestOrder requestOrder) {
@@ -47,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
             ResponseOrder responseOrder = new ResponseOrder();
             responseOrder.setMessage(responseOrder.getMessage());
             responseOrder.setStatus(responseOrder.getStatus());
+            responseOrder.setProductId(responseOrder.getProductId());
             return responseOrder;
         }
 
@@ -56,13 +59,15 @@ public class OrderServiceImpl implements OrderService {
         OrderDto orderDto = modelMapper.map(requestOrder, OrderDto.class);
         orderDto.setUser_id(user_id);
 
-
         orderDto.setOrderId(UUID.randomUUID().toString());
         orderDto.setTotalPrice(requestOrder.getQty() * requestOrder.getUnitPrice());
         ResponseOrder returnValue = modelMapper.map(orderDto, ResponseOrder.class);
 
         // send an order to kafka
         kafkaOrderProducer.send("orders", orderDto);
+        // update product stock
+        kafkaProductProducer.send("product_purchase_update", orderDto);
+
         return returnValue;
     }
 
