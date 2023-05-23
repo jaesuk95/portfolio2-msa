@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: apigateway-service
-        image: jaesuk95/portfolio-apigateway-service:0.0.2
+        image: jaesuk95/portfolio-apigateway-service:0.0.7
         imagePullPolicy: Always
         # resources:
         #   limits:
