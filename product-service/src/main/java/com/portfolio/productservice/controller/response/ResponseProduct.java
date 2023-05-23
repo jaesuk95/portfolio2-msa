@@ -9,4 +9,5 @@ public class ResponseProduct {
     private String productId;
     private String message;
     private int status;
+    private int price;
 }
