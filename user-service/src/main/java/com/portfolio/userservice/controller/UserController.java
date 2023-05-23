@@ -19,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/user-service")
@@ -82,10 +84,10 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/company")
-    public ResponseEntity<ResponseUser> companyValidation(@PathVariable String userId) {
+    public ResponseEntity<List<ResponseCompany>> companyValidation(@PathVariable String userId) {
         log.info("user-service before acquiring data");
-        ResponseUser responseUser = userService.validateCompanyOwner(userId);
+        List<ResponseCompany> responseCompanies = userService.validateCompanyOwner(userId);
         log.info("user-service after acquiring data");
-        return ResponseEntity.status(HttpStatus.OK).body(responseUser);
+        return ResponseEntity.status(HttpStatus.OK).body(responseCompanies);
     }
 }

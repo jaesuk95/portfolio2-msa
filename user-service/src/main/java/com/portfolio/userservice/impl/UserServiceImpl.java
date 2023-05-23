@@ -109,7 +109,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseUser validateCompanyOwner(String userId) {
+    public List<ResponseCompany> validateCompanyOwner(String userId) {
         UserEntity userEntity = userRepository.findByUserId(userId);
         if (userEntity == null) {
             throw new UsernameNotFoundException("User not found");
@@ -124,14 +124,15 @@ public class UserServiceImpl implements UserService {
             responseCompanies.add(responseCompany);
         });
 
-        UserDto userDto = new UserDto();
-        userDto.setCompanies(responseCompanies);
-        userDto.setUserId(userEntity.getUserId());
-        userDto.setName(userEntity.getName());
-
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return mapper.map(userDto, ResponseUser.class);
+//        UserDto userDto = new UserDto();
+//        userDto.setCompanies(responseCompanies);
+//        userDto.setUserId(userEntity.getUserId());
+//        userDto.setName(userEntity.getName());
+//
+//        ModelMapper mapper = new ModelMapper();
+//        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+//        return mapper.map(userDto, ResponseUser.class);
+        return responseCompanies;
     }
 
     @Override

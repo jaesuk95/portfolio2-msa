@@ -5,6 +5,8 @@ import com.portfolio.userservice.response.ResponseCompany;
 import com.portfolio.userservice.response.ResponseUser;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
 
     UserDto getUserDetailsByEmail(String username);
@@ -13,7 +15,7 @@ public interface UserService extends UserDetailsService {
 
     UserDto getUserByUserId(String userId);
 
-    ResponseUser validateCompanyOwner(String userId);
+    List<ResponseCompany> validateCompanyOwner(String userId);
 
     ResponseCompany registerCompany(CompanyDto companyDto);
 }
