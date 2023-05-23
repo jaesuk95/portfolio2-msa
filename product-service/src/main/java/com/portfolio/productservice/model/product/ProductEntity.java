@@ -19,8 +19,6 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String brandName;
-    private String companyRegistered;
     private int stock;
     private LocalDateTime registeredDate;
     private int price;
@@ -29,8 +27,6 @@ public class ProductEntity {
     private String companyName;
 
     public ProductEntity(int stock, LocalDateTime registeredDate, int price, String userId, String companyName) {
-        this.brandName = brandName;
-        this.companyRegistered = companyRegistered;
         this.stock = stock;
         this.registeredDate = registeredDate;
         this.price = price;

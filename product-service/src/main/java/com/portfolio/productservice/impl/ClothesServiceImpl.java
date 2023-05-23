@@ -3,6 +3,7 @@ package com.portfolio.productservice.impl;
 import com.portfolio.productservice.controller.response.ResponseClothes;
 import com.portfolio.productservice.controller.response.ResponseCompany;
 import com.portfolio.productservice.feign.UserServiceClient;
+import com.portfolio.productservice.message.kafka.producer.KafkaClothesProducer;
 import com.portfolio.productservice.model.product.clothes.*;
 import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class ClothesServiceImpl implements ClothesService {
     private final CircuitBreakerFactory circuitBreakerFactory;
     private final UserServiceClient userServiceClient;
 
+
     @Override
     public ClothesDto registerClothes(ClothesDto clothesDto) {
         String userId = clothesDto.getUser_id();
@@ -50,20 +52,22 @@ public class ClothesServiceImpl implements ClothesService {
         }
         log.info("found company, user is eligible to register a product");
 
-        Clothes clothes = new Clothes(
-                clothesDto.getStock(),
-                LocalDateTime.now(),
-                clothesDto.getClothesType(),
-                clothesDto.getLengthType(),
-                clothesDto.getPrice(),
-                clothesDto.getUser_id(),
-                responseCompany.get().getCompanyName()
-        );
+//        Clothes clothes = new Clothes(
+//                clothesDto.getStock(),
+//                LocalDateTime.now(),
+//                clothesDto.getClothesType(),
+//                clothesDto.getLengthType(),
+//                clothesDto.getPrice(),
+//                clothesDto.getUser_id(),
+//                responseCompany.get().getCompanyName()
+//        );
 
-        clothesRepository.save(clothes);
-        ModelMapper mapper = new ModelMapper();
-        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return mapper.map(clothes, ClothesDto.class);
+        kafkaClothesProducer.send("clothes", clothesDto);
+//        clothesRepository.save(clothes);
+//        ModelMapper mapper = new ModelMapper();
+//        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+//        return mapper.map(clothes, ClothesDto.class);
+        return clothesDto;
     }
 
     @Override
@@ -82,6 +86,8 @@ public class ClothesServiceImpl implements ClothesService {
         PageImpl<ResponseClothes> responseClothesPage = new PageImpl<>(responseList, clothesDto.getPageable(), clothesDto.getTotalPages());
         return responseClothesPage;
     }
+
+    private final KafkaClothesProducer kafkaClothesProducer;
 
 
 }
