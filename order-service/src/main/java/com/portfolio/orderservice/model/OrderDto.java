@@ -17,5 +17,5 @@ public class OrderDto implements Serializable {
     private Integer unitPrice;
     private Integer totalPrice;
     private String orderId;
-    private String userId;
+    private String user_id;
 }

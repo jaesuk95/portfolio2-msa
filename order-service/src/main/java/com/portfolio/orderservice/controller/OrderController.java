@@ -30,12 +30,10 @@ public class OrderController {
         return "welcome message sent";
     }
 
-    @PostMapping("/{userId}/order")
-    public ResponseEntity<ResponseOrder> createOrder(
-            @PathVariable("userId") String userId,
-            @RequestBody RequestOrder requestOrder) {
+    @PostMapping("/order")
+    public ResponseEntity<ResponseOrder> createOrder(@RequestBody RequestOrder requestOrder) {
         log.info("user order register request");
-        ResponseOrder responseOrder = orderService.registerUserOrder(requestOrder, userId);
+        ResponseOrder responseOrder = orderService.registerUserOrder(requestOrder);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseOrder);
     }
 

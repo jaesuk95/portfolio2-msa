@@ -38,7 +38,7 @@ public class KafkaOrderProducer {
         // create payload
         Payload payload = Payload.builder()
                 .order_id(orderDto.getOrderId())
-                .user_id(orderDto.getUserId())
+                .user_id(orderDto.getUser_id())
                 .product_id(orderDto.getProductId())
                 .qty(orderDto.getQty())
                 .unit_price(orderDto.getUnitPrice())
