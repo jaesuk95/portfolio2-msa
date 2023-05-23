@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -34,7 +35,7 @@ public class ClothesServiceImpl implements ClothesService {
 
 
     @Override
-    public ClothesDto registerClothes(ClothesDto clothesDto) {
+    public ResponseClothes registerClothes(ClothesDto clothesDto) {
         String userId = clothesDto.getUser_id();
 
         // 제품을 등록하기 전, 사용자를 확인한다.
@@ -52,22 +53,12 @@ public class ClothesServiceImpl implements ClothesService {
         }
         log.info("found company, user is eligible to register a product");
 
-//        Clothes clothes = new Clothes(
-//                clothesDto.getStock(),
-//                LocalDateTime.now(),
-//                clothesDto.getClothesType(),
-//                clothesDto.getLengthType(),
-//                clothesDto.getPrice(),
-//                clothesDto.getUser_id(),
-//                responseCompany.get().getCompanyName()
-//        );
-
+        clothesDto.setProductId(UUID.randomUUID().toString());
         kafkaClothesProducer.send("clothes", clothesDto);
-//        clothesRepository.save(clothes);
-//        ModelMapper mapper = new ModelMapper();
-//        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-//        return mapper.map(clothes, ClothesDto.class);
-        return clothesDto;
+
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return mapper.map(clothesDto, ResponseClothes.class);
     }
 
     @Override
@@ -83,8 +74,7 @@ public class ClothesServiceImpl implements ClothesService {
             responseList.add(responseClothesMapped);
         });
 
-        PageImpl<ResponseClothes> responseClothesPage = new PageImpl<>(responseList, clothesDto.getPageable(), clothesDto.getTotalPages());
-        return responseClothesPage;
+        return new PageImpl<>(responseList, clothesDto.getPageable(), clothesDto.getTotalPages());
     }
 
     private final KafkaClothesProducer kafkaClothesProducer;

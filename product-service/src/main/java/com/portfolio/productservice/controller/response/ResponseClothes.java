@@ -21,6 +21,7 @@ public class ResponseClothes {
     private String clothesType;
     private Integer price;
     private String companyName;
+    private String productId;
 
     private String errorMessage;
 

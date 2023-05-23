@@ -28,7 +28,9 @@ public class KafkaClothesProducer {
             new Field("datetime", true, "registered_date"),
             new Field("string", true, "price"),
             new Field("string", true, "user_id"),
-            new Field("string", true, "company_name"));
+            new Field("string", true, "company_name"),
+            new Field("string", true, "product_id")
+    );
     Schema schema = Schema.builder()
             .type("struct")
             .fields(fields)
@@ -36,7 +38,7 @@ public class KafkaClothesProducer {
             .name("clothes")
             .build();
 
-    public ClothesDto send(String kafkaTopic, ClothesDto clothesDto) {
+    public void send(String kafkaTopic, ClothesDto clothesDto) {
         // create payload
         Payload payload = Payload.builder()
                 .clothes_type(clothesDto.getClothesType())
@@ -46,15 +48,8 @@ public class KafkaClothesProducer {
                 .price(clothesDto.getPrice())
                 .user_id(clothesDto.getUser_id())
                 .company_name(clothesDto.getCompanyName())
+                .product_id(clothesDto.getProductId())
                 .build();
-
-//                .order_id(orderDto.getOrderId())
-//                .user_id(orderDto.getUserId())
-//                .product_id(orderDto.getProductId())
-//                .qty(orderDto.getQty())
-//                .unit_price(orderDto.getUnitPrice())
-//                .total_price(orderDto.getTotalPrice())
-//                .build();
 
         KafkaClothesDto kafkaClothesDto = new KafkaClothesDto(schema,payload);
 
@@ -69,6 +64,5 @@ public class KafkaClothesProducer {
         kafkaTemplate.send(kafkaTopic, jsonInString);
         log.info("Kafka Producer send data from the Order microservice: {}", clothesDto);
 
-        return clothesDto;
     }
 }

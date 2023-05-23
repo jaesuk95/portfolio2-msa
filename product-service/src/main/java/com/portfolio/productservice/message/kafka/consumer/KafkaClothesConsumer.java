@@ -40,15 +40,6 @@ public class KafkaClothesConsumer {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         Payload payload = modelMapper.map(map.get("payload"), Payload.class);
 
-//        OrderEntity orderEntity = new OrderEntity(
-//                payload.getProduct_id(),
-//                payload.getQty(),
-//                payload.getUnit_price(),
-//                payload.getTotal_price(),
-//                payload.getUser_id(),
-//                payload.getOrder_id()
-//        );
-
         Clothes clothes = new Clothes(
                 payload.getStock(),
                 LocalDateTime.now(),
@@ -56,7 +47,8 @@ public class KafkaClothesConsumer {
                 payload.getLength_type(),
                 payload.getPrice(),
                 payload.getUser_id(),
-                payload.getCompany_name()
+                payload.getCompany_name(),
+                payload.getProduct_id()
         );
 
         clothesRepository.save(clothes);

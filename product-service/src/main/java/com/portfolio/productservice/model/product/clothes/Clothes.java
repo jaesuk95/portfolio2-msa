@@ -23,8 +23,8 @@ public class Clothes extends ProductEntity {
     @Enumerated(EnumType.STRING)
     private LengthType lengthType;
 
-    public Clothes(int stock, LocalDateTime registeredDate, ClothesType clothesType, LengthType lengthType, int price, String userId, String companyName) {
-        super(stock, registeredDate, price, userId, companyName);
+    public Clothes(int stock, LocalDateTime registeredDate, ClothesType clothesType, LengthType lengthType, int price, String userId, String companyName, String productId) {
+        super(stock, registeredDate, price, userId, companyName, productId);
         this.clothesType = clothesType;
         this.lengthType = lengthType;
     }

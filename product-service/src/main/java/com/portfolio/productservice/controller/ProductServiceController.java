@@ -46,9 +46,7 @@ public class ProductServiceController {
             ModelMapper mapper = new ModelMapper();
             ClothesDto clothesDto = mapper.map(requestClothes, ClothesDto.class);
 
-            ClothesDto clothesDtoReturn = clothesService.registerClothes(clothesDto);
-            mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-            ResponseClothes returnValue = mapper.map(clothesDtoReturn, ResponseClothes.class);
+            ResponseClothes returnValue = clothesService.registerClothes(clothesDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseClothes(e.getMessage()));

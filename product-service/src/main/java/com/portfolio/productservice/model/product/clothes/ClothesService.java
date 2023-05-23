@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ClothesService {
-    ClothesDto registerClothes(ClothesDto requestClothes);
+    ResponseClothes registerClothes(ClothesDto requestClothes);
 
     Page<ResponseClothes> viewAllClothes(Pageable pageable);
 }

@@ -24,4 +24,5 @@ public class ClothesDto {
     private int price;
     private String companyName;
     private String user_id;
+    private String productId;
 }
