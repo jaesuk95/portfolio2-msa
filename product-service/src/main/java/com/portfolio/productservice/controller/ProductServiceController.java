@@ -2,6 +2,8 @@ package com.portfolio.productservice.controller;
 
 import com.portfolio.productservice.controller.request.RequestClothes;
 import com.portfolio.productservice.controller.response.ResponseClothes;
+import com.portfolio.productservice.controller.response.ResponseProduct;
+import com.portfolio.productservice.model.product.ProductService;
 import com.portfolio.productservice.model.product.clothes.ClothesService;
 import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
 import io.micrometer.core.annotation.Timed;
@@ -28,6 +30,7 @@ public class ProductServiceController {
 
     private final Environment env;
     private final ClothesService clothesService;
+    private final ProductService productService;
 
     @GetMapping("/health_check")
     @Timed(value = "users.status", longTask = true) // prometheus 에 등록
@@ -60,5 +63,11 @@ public class ProductServiceController {
         Page<ResponseClothes> responseClothes = clothesService.viewAllClothes(pageable);
         log.info("request for all clothes");
         return ResponseEntity.status(HttpStatus.OK).body(responseClothes);
+    }
+
+    @GetMapping("/public/{productId}")
+    public ResponseEntity<ResponseProduct> getProduct(@PathVariable String productId) {
+        ResponseProduct responseProduct = productService.getProduct(productId);
+        return ResponseEntity.status(HttpStatus.OK).body(responseProduct);
     }
 }
