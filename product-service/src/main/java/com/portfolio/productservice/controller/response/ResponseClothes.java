@@ -19,5 +19,12 @@ public class ResponseClothes {
     private LocalDateTime registeredDate;
     private String lengthType;
     private String clothesType;
-    private int price;
+    private Integer price;
+    private String companyName;
+
+    private String errorMessage;
+
+    public ResponseClothes(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
 }

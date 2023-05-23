@@ -26,15 +26,15 @@ public class ProductEntity {
     private int price;
     private String userId;
     // for registration
-    private String companyId;
+    private String companyName;
 
-    public ProductEntity(int stock, LocalDateTime registeredDate, int price, String userId, String companyId) {
+    public ProductEntity(int stock, LocalDateTime registeredDate, int price, String userId, String companyName) {
         this.brandName = brandName;
         this.companyRegistered = companyRegistered;
         this.stock = stock;
         this.registeredDate = registeredDate;
         this.price = price;
         this.userId = userId;
-        this.companyId = companyId;
+        this.companyName = companyName;
     }
 }

@@ -5,7 +5,6 @@ import com.portfolio.productservice.model.product.clothes.LengthType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,5 +22,6 @@ public class ClothesDto {
     @Enumerated(EnumType.STRING)
     private ClothesType clothesType;
     private int price;
-    private String userId;
+    private String companyName;
+    private String user_id;
 }

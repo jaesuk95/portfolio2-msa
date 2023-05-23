@@ -1,6 +1,7 @@
 package com.portfolio.productservice.impl;
 
 import com.portfolio.productservice.controller.response.ResponseClothes;
+import com.portfolio.productservice.controller.response.ResponseCompany;
 import com.portfolio.productservice.feign.UserServiceClient;
 import com.portfolio.productservice.model.product.clothes.*;
 import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -31,14 +33,22 @@ public class ClothesServiceImpl implements ClothesService {
 
     @Override
     public ClothesDto registerClothes(ClothesDto clothesDto) {
+        String userId = clothesDto.getUser_id();
 
-        String userId = clothesDto.getUserId();
         // 제품을 등록하기 전, 사용자를 확인한다.
         log.info("Before call orders microservice");
         CircuitBreaker circuitbreaker = circuitBreakerFactory.create("circuitBreaker");
-        circuitbreaker.run(() -> userServiceClient.checkOwner(userId),
-                throwable -> new ArrayList<>());    // <- throwable -> new ArrayList<>() 이 코드의 뜻은, orderServiceClient.getOrders(id) 에서 오류가 발생하면 비어있는 arrayList[] 으로 반환한다는 뜻이다.
+        List<ResponseCompany> responseCompanies = circuitbreaker.run(() -> userServiceClient.companyValidation(userId),
+                throwable -> new ArrayList<>());// <- throwable -> new ArrayList<>() 이 코드의 뜻은, orderServiceClient.getOrders(id) 에서 오류가 발생하면 비어있는 arrayList[] 으로 반환한다는 뜻이다.
         log.info("After called orders microservice");
+
+        Optional<ResponseCompany> responseCompany = responseCompanies.stream()
+                .filter(data -> data.getCompanyName().equals(clothesDto.getCompanyName()))
+                .findFirst();
+        if (responseCompany.isEmpty()) {
+            throw new IllegalStateException("Company not found, not eligible to register");
+        }
+        log.info("found company, user is eligible to register a product");
 
         Clothes clothes = new Clothes(
                 clothesDto.getStock(),
@@ -46,8 +56,8 @@ public class ClothesServiceImpl implements ClothesService {
                 clothesDto.getClothesType(),
                 clothesDto.getLengthType(),
                 clothesDto.getPrice(),
-                clothesDto.getUserId(),
-                companyId
+                clothesDto.getUser_id(),
+                responseCompany.get().getCompanyName()
         );
 
         clothesRepository.save(clothes);

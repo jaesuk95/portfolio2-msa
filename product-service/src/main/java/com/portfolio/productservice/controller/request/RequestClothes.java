@@ -19,5 +19,6 @@ public class RequestClothes {
     @Enumerated(EnumType.STRING)
     private ClothesType clothesType;
     private int price;
-    private String userId;
+    private String user_id;
+    private String companyName;
 }
