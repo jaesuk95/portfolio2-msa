@@ -71,6 +71,16 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             subject = Jwts.parser().setSigningKey(env.getProperty("token.secret"))
                     .parseClaimsJws(jwt).getBody()
                     .getSubject();
+
+            Claims claims = Jwts.parser()
+                    .setSigningKey(env.getProperty("token.secret"))
+                    .parseClaimsJws(jwt)
+                    .getBody();
+
+            String user_role = claims.get("user_role", String.class);
+            if (user_role.equals("ROLE_UNAUTHORIZED")) {
+                throw new IllegalStateException("NOT AUTHORISED");
+            }
         } catch (Exception e) {
             returnValue = false;
         }

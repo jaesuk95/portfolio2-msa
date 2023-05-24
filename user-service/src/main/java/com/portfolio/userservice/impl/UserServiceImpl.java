@@ -64,14 +64,12 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException(String.format("User not found = %s", username));
         }
 
-//        UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
-        UserDto userDto = UserDto.builder()
+        return UserDto.builder()
                 .userId(userEntity.getUserId())
                 .email(userEntity.getEmail())
                 .name(userEntity.getName())
+                .role(userEntity.getRole())
                 .build();
-
-        return userDto;
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.portfolio.userservice.model.user;
 
 import com.portfolio.userservice.response.ResponseCompany;
 import com.portfolio.userservice.response.ResponseOrder;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +23,8 @@ public class UserDto {
     private String name;
     private String userId;
     private LocalDateTime createdAt;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private List<ResponseOrder> orders;
     private List<ResponseCompany> companies;
