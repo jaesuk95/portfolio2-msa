@@ -34,31 +34,65 @@ spring:
             postLogger: true
       routes:
         - id: user-service
-#          uri: http://localhost:8081/
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/user-service/**
+            - Path=/api/user-service/public/**
 
-        - id: order-service
-          uri: lb://ORDER-SERVICE
-          predicates:
-            - Path=/order-service/**
 
-        - id: payment-service
-          uri: lb://PAYMENT-SERVICE
+        - id: user-service
+          uri: lb://USER-SERVICE
           predicates:
-            - Path=/payment-service/**
+            - Path=/api/user-service/auth/**
 
-        - id: product-service
-          uri: lb://PRODUCT-SERVICE
+        - id: user-service
+          uri: lb://USER-SERVICE
           predicates:
-            - Path=/product-service/**
+            - Path=/api/user-service/profile/**
+          filters:
+            - AuthorizationHeaderFilter
 
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
             - Path=/login
             - Method=POST
+
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/order-service/public/**
+
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/order-service/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/payment-service/public/**
+
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/payment-service/**
+          filters:
+            - AuthorizationHeaderFilter
+
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/product-service/public/**
+
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/product-service/**
+          filters:
+            - AuthorizationHeaderFilter
+
 
 
 #              /auth/registration

@@ -9,6 +9,6 @@ import java.util.List;
 
 @FeignClient("product-service")
 public interface ProductServiceClient {
-    @GetMapping("/product-service/public/{productId}")
+    @GetMapping("/api/product-service/public/{productId}")
     ResponseProduct productAvailable(@PathVariable String productId);
 }

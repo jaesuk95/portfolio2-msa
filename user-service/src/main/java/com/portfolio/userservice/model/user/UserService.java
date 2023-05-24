@@ -18,4 +18,6 @@ public interface UserService extends UserDetailsService {
     List<ResponseCompany> validateCompanyOwner(String userId);
 
     ResponseCompany registerCompany(CompanyDto companyDto);
+
+    UserDto refreshToken(UserDto userDto);
 }

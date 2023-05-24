@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -39,6 +37,8 @@ public class UserEntity implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<AddressEntity> address = new ArrayList<>();
+
+    private LocalDateTime createdAt;
 
     public void setCompanies(List<Company> companies) {
         this.companies = companies;

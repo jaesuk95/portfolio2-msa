@@ -9,7 +9,7 @@ import java.util.List;
 
 @FeignClient("user-service")
 public interface UserServiceClient {
-    @GetMapping("/user-service/{userId}/company")
+    @GetMapping("/api/user-service/profile/{userId}/company")
     List<ResponseCompany> companyValidation(@PathVariable String userId);
 
 }

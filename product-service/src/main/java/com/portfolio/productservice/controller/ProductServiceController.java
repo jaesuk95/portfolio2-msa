@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product-service")
+@RequestMapping("/api/product-service")
 @RequiredArgsConstructor
 @Slf4j
 public class ProductServiceController {

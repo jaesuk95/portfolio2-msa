@@ -64,7 +64,13 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException(String.format("User not found = %s", username));
         }
 
-        UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
+//        UserDto userDto = new ModelMapper().map(userEntity, UserDto.class);
+        UserDto userDto = UserDto.builder()
+                .userId(userEntity.getUserId())
+                .email(userEntity.getEmail())
+                .name(userEntity.getName())
+                .build();
+
         return userDto;
     }
 
@@ -148,6 +154,12 @@ public class UserServiceImpl implements UserService {
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         return mapper.map(company, ResponseCompany.class);
+    }
+
+    @Override
+    public UserDto refreshToken(UserDto userDto) {
+//        userDto.
+        return userDto;
     }
 
 

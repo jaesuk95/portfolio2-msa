@@ -27,19 +27,17 @@ public class WebSecurity {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    // 필터를 통과하지 않고 권한이 필요하지 않다
-    private static final String[] PUBLIC_LIST = {
-            "/actuator/**",
-            "/user-service/welcome",
-            "/user-service/health_check",
-            "/auth/registration",
-            "/user-service/auth/registration",
-            "/user-service/check",
-            "/check"
-    };
+
+//    private static final String[] PUBLIC_LIST = {
+//
+//    };
 
     private static final String[] WHITE_LIST = {
-            "/user-service/**"
+            "/actuator/**",
+            "/api/user-service/auth/**",
+            "/api/user-service/public/**",
+            "/api/user-service/profile/**",
+//            "/api/user-service/auth/registration",
     };
 
     @Bean
@@ -50,9 +48,9 @@ public class WebSecurity {
                     try {
                         authorize
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/user-service/**")).permitAll()
-                                .requestMatchers(PUBLIC_LIST).permitAll()
-                                .requestMatchers(WHITE_LIST).authenticated()
+                                .requestMatchers(WHITE_LIST).permitAll()
+//                                .requestMatchers(WHITE_LIST).hasAnyRole("ROLE_USER", "ROLE_ADMIN")
+                                .anyRequest().authenticated()
                                 .and()
                                 .addFilter(getAuthenticationFilter());
                     } catch (Exception e) {
@@ -62,11 +60,14 @@ public class WebSecurity {
         );
         return http.build();
     }
+//                                .requestMatchers(new AntPathRequestMatcher("/api/user-service/**")).permitAll()
+
 //                                .requestMatchers(new IpAddressMatcher("127.0.0.1")).permitAll()     // local
 //                                .requestMatchers(new IpAddressMatcher("192.168.0.4")).permitAll()   // through api-gateway
 //                                .requestMatchers(new IpAddressMatcher("172.18.0.0/16")).permitAll() // through api-gateway docker container
 //                                .requestMatchers(new IpAddressMatcher("10.109.113.170")).permitAll() // through api-gateway loadbalancer (minikube)
-    //                                .requestMatchers(new IpAddressMatcher("10.100.147.106")).permitAll() // through api-gateway docker container
+//                                .requestMatchers(new IpAddressMatcher("10.100.147.106")).permitAll() // through api-gateway docker container
+
     public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder);
         return auth.build();
