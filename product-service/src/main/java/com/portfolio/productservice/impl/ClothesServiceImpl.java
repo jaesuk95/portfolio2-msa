@@ -1,13 +1,21 @@
 package com.portfolio.productservice.impl;
 
+import com.google.common.util.concurrent.ListenableFuture;
 import com.portfolio.productservice.controller.response.ResponseClothes;
 import com.portfolio.productservice.controller.response.ResponseCompany;
 import com.portfolio.productservice.feign.UserServiceClient;
+import com.portfolio.productservice.message.dto.KafkaClothesDto;
+import com.portfolio.productservice.message.dto.KafkaProductDto;
 import com.portfolio.productservice.message.kafka.producer.KafkaClothesProducer;
+import com.portfolio.productservice.message.kafka.producer.KafkaProductProducer;
+import com.portfolio.productservice.model.product.ProductDto;
+import com.portfolio.productservice.model.product.ProductEntity;
+import com.portfolio.productservice.model.product.ProductRepository;
 import com.portfolio.productservice.model.product.clothes.*;
-import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
+import com.portfolio.productservice.model.product.clothes.dto.ProductClothesDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
@@ -15,13 +23,16 @@ import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
+import org.apache.kafka.clients.producer.Callback;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -29,14 +40,18 @@ import java.util.UUID;
 public class ClothesServiceImpl implements ClothesService {
 
     private final ClothesRepository clothesRepository;
+    private final ProductRepository productRepository;
     private final ClothesQueryDslRepository clothesQueryDslRepository;
     private final CircuitBreakerFactory circuitBreakerFactory;
     private final UserServiceClient userServiceClient;
+    private final KafkaClothesProducer kafkaClothesProducer;
+    private final KafkaProductProducer kafkaProductProducer;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
 
     @Override
-    public ResponseClothes registerClothes(ClothesDto clothesDto) {
-        String userId = clothesDto.getUser_id();
+    public ResponseClothes registerClothes(ProductClothesDto productClothesDto) {
+        String userId = productClothesDto.getUser_id();
 
         // 제품을 등록하기 전, 사용자를 확인한다.
         log.info("Before call orders microservice");
@@ -46,24 +61,41 @@ public class ClothesServiceImpl implements ClothesService {
         log.info("After called orders microservice");
 
         Optional<ResponseCompany> responseCompany = responseCompanies.stream()
-                .filter(data -> data.getCompanyName().equals(clothesDto.getCompanyName()))
+                .filter(data -> data.getCompanyName().equals(productClothesDto.getCompanyName()))
                 .findFirst();
         if (responseCompany.isEmpty()) {
             throw new IllegalStateException("Company not found, not eligible to register");
         }
         log.info("found company, user is eligible to register a product");
+        productClothesDto.setProductId(UUID.randomUUID().toString());
 
-        clothesDto.setProductId(UUID.randomUUID().toString());
-        kafkaClothesProducer.send("clothes", clothesDto);
+        KafkaProductDto kafkaProductDto = new KafkaProductDto(
+                productClothesDto.getStock(),
+                productClothesDto.getPrice(),
+                productClothesDto.getUser_id(),
+                productClothesDto.getCompanyName(),
+                productClothesDto.getProductId(),
+                "PRODUCT_CLOTHES"
+        );
+
+        kafkaProductProducer.send("product", kafkaProductDto);
+
+        KafkaClothesDto kafkaClothesDto = new KafkaClothesDto(
+                productClothesDto.getLengthType().toString(),
+                productClothesDto.getClothesType().toString(),
+                productRepository.findByProductId(productClothesDto.getProductId()).getId()
+        );
+
+        kafkaClothesProducer.send("clothes", kafkaClothesDto);
 
         ModelMapper mapper = new ModelMapper();
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        return mapper.map(clothesDto, ResponseClothes.class);
+        return mapper.map(productClothesDto, ResponseClothes.class);
     }
 
     @Override
     public Page<ResponseClothes> viewAllClothes(Pageable pageable) {
-        Page<ClothesDto> clothesDto = clothesQueryDslRepository.getClothes(pageable);
+        Page<ProductClothesDto> clothesDto = clothesQueryDslRepository.getClothes(pageable);
 
         List<ResponseClothes> responseList = new ArrayList<>();
 
@@ -76,26 +108,5 @@ public class ClothesServiceImpl implements ClothesService {
 
         return new PageImpl<>(responseList, clothesDto.getPageable(), clothesDto.getTotalPages());
     }
-
-    @Override
-    public ResponseClothes test() {
-        ClothesDto clothesDto = new ClothesDto();
-        clothesDto.setClothesType(ClothesType.shirt);
-        clothesDto.setLengthType(LengthType.longLength);
-        clothesDto.setStock(10);
-//        clothesDto.setRegisteredDate(LocalDateTime.now());
-        clothesDto.setPrice(1000);
-        clothesDto.setUser_id("1");
-        clothesDto.setCompanyName("companyName");
-        clothesDto.setProductId("productId");
-        clothesDto.setId(1L);
-        clothesDto.setType("PRODUCT_CLOTHES");
-
-        kafkaClothesProducer.send("product",clothesDto);
-        return null;
-    }
-
-    private final KafkaClothesProducer kafkaClothesProducer;
-
 
 }

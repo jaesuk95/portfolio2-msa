@@ -1,6 +1,6 @@
 package com.portfolio.productservice.model.product.clothes;
 
-import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
+import com.portfolio.productservice.model.product.clothes.dto.ProductClothesDto;
 import com.portfolio.productservice.querydsl.Querydsl4RepositorySupport;
 import com.querydsl.core.types.Projections;
 import org.springframework.data.domain.Page;
@@ -15,9 +15,9 @@ public class ClothesQueryDslRepository extends Querydsl4RepositorySupport {
         super(Clothes.class);
     }
 
-    public Page<ClothesDto> getClothes(Pageable pageable) {
+    public Page<ProductClothesDto> getClothes(Pageable pageable) {
         return applyPagination(pageable, contentQuery -> contentQuery
-                .select(Projections.bean(ClothesDto.class,
+                .select(Projections.bean(ProductClothesDto.class,
                         QClothes.clothes.id,
                         QClothes.clothes.stock,
                         QClothes.clothes.registeredDate,

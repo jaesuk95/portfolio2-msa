@@ -8,12 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClothesDto {
+public class ProductClothesDto {
     private Long id;
     private Integer stock;
 //    private LocalDateTime registeredDate;

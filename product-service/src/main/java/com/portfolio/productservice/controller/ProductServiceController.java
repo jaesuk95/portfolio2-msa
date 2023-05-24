@@ -5,22 +5,18 @@ import com.portfolio.productservice.controller.response.ResponseClothes;
 import com.portfolio.productservice.controller.response.ResponseProduct;
 import com.portfolio.productservice.model.product.ProductService;
 import com.portfolio.productservice.model.product.clothes.ClothesService;
-import com.portfolio.productservice.model.product.clothes.dto.ClothesDto;
+import com.portfolio.productservice.model.product.clothes.dto.ProductClothesDto;
 import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/product-service")
@@ -47,20 +43,14 @@ public class ProductServiceController {
             HttpServletRequest request, @RequestBody RequestClothes requestClothes) {
         try {
             ModelMapper mapper = new ModelMapper();
-            ClothesDto clothesDto = mapper.map(requestClothes, ClothesDto.class);
+            ProductClothesDto productClothesDto = mapper.map(requestClothes, ProductClothesDto.class);
 
-            ResponseClothes returnValue = clothesService.registerClothes(clothesDto);
+            ResponseClothes returnValue = clothesService.registerClothes(productClothesDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(returnValue);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseClothes(e.getMessage()));
         }
 
-    }
-
-    @PostMapping("/test")
-    public ResponseEntity<ResponseClothes> registerThroughKafka() {
-        ResponseClothes responseClothes = clothesService.test();
-        return ResponseEntity.status(HttpStatus.OK).body(responseClothes);
     }
 
     @GetMapping("/public/clothes/all")

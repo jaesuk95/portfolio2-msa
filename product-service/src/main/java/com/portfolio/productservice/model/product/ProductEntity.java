@@ -1,5 +1,6 @@
 package com.portfolio.productservice.model.product;
 
+import com.portfolio.productservice.model.product.clothes.Clothes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Inheritance(strategy = InheritanceType.JOINED)
+//@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING)
 public class ProductEntity {
 
@@ -24,7 +25,6 @@ public class ProductEntity {
 //    private LocalDateTime registeredDate;
     private int price;
     private String userId;
-    // for registration
     private String companyName;
     private String productId;
 

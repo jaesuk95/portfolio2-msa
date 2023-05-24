@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(name = "ID")
+//@PrimaryKeyJoinColumn(name = "ID")
 @DiscriminatorValue("PRODUCT_CLOTHES")
 public class Clothes extends ProductEntity {
 
@@ -21,6 +21,11 @@ public class Clothes extends ProductEntity {
 
     @Enumerated(EnumType.STRING)
     private LengthType lengthType;
+
+    // Define the foreign key relationship with the product table
+    @OneToOne
+    @JoinColumn(name = "PRODUCT_ENTITY_ID")
+    private ProductEntity product;
 
 
     public Clothes(int stock, LocalDateTime registeredDate, ClothesType clothesType, LengthType lengthType, int price, String userId, String companyName, String productId) {

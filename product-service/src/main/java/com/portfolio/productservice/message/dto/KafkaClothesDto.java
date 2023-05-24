@@ -1,17 +1,15 @@
 package com.portfolio.productservice.message.dto;
 
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
-@Getter
-@Setter
-@Builder
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class KafkaClothesDto implements Serializable {
-    private Schema schema;
-    private Payload payload;
+public class KafkaClothesDto {
+    private String lengthType;
+    private String clothesType;
+    private Long product_entity_id;
 }
