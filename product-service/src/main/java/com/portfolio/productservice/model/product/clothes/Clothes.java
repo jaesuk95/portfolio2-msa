@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-//@Table(name = "clothes")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(name = "ID")      // product 의 아이디를 참조한다.
+@PrimaryKeyJoinColumn(name = "ID")
 @DiscriminatorValue("PRODUCT_CLOTHES")
 public class Clothes extends ProductEntity {
 
@@ -22,6 +21,7 @@ public class Clothes extends ProductEntity {
 
     @Enumerated(EnumType.STRING)
     private LengthType lengthType;
+
 
     public Clothes(int stock, LocalDateTime registeredDate, ClothesType clothesType, LengthType lengthType, int price, String userId, String companyName, String productId) {
         super(stock, registeredDate, price, userId, companyName, productId);

@@ -15,15 +15,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Payload {
 
-    @Enumerated(EnumType.STRING)
-    private ClothesType clothes_type;
-    @Enumerated(EnumType.STRING)
-    private LengthType length_type;
+//    @Enumerated(EnumType.STRING)
+//    private ClothesType clothes_type;
+//    @Enumerated(EnumType.STRING)
+//    private LengthType length_type;
+//    private String clothes_type;
+//    private String length_type;
     private int stock;
-    private LocalDateTime registered_date;
+//    private LocalDateTime registered_date;
     private int price;
     private String user_id;
     private String company_name;
     private String product_id;
-    private Integer qty;
+    //    private Long id;
+//    private Integer qty;
+    private String type;
 }

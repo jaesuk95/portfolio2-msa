@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class ClothesDto {
     private Long id;
     private Integer stock;
-    private LocalDateTime registeredDate;
+//    private LocalDateTime registeredDate;
     @Enumerated(EnumType.STRING)
     private LengthType lengthType;
     @Enumerated(EnumType.STRING)
@@ -25,4 +25,5 @@ public class ClothesDto {
     private String companyName;
     private String user_id;
     private String productId;
+    private String type;
 }

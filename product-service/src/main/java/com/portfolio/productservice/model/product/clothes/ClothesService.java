@@ -9,4 +9,7 @@ public interface ClothesService {
     ResponseClothes registerClothes(ClothesDto requestClothes);
 
     Page<ResponseClothes> viewAllClothes(Pageable pageable);
+
+    ResponseClothes test();
+
 }

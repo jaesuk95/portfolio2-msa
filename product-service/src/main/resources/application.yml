@@ -10,7 +10,8 @@ spring:
     #    username: sa
     #    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/portfolio2
+#    url: jdbc:mysql://localhost:3306/portfolio2
+    url: jdbc:mysql://localhost:3306/portfolio2_product
     username: root
     password: admin
 #    url: jdbc:h2:mem:testdb
@@ -25,7 +26,7 @@ spring:
       path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       dialect: org.hibernate.dialect.MySQL8Dialect
       driver-class-name: com.mysql.cj.jdbc.Driver
     show-sql: true

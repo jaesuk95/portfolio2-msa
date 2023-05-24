@@ -9,14 +9,14 @@ spring:
     #    url: jdbc:h2:mem:testdb
     #    username: sa
     #    password:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/mydb
-#    username: root
-#    password: admin
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/portfolio2_order
+    username: root
+    password: admin
+#    url: jdbc:h2:mem:testdb
+#    driver-class-name: org.h2.Driver
+#    username: sa
+#    password:
   h2:
     console:
       enabled: true
@@ -25,7 +25,7 @@ spring:
       path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       dialect: org.hibernate.dialect.MySQL8Dialect
       driver-class-name: com.mysql.cj.jdbc.Driver
     show-sql: true

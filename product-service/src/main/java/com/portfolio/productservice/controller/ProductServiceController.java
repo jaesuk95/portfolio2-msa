@@ -57,6 +57,12 @@ public class ProductServiceController {
 
     }
 
+    @PostMapping("/test")
+    public ResponseEntity<ResponseClothes> registerThroughKafka() {
+        ResponseClothes responseClothes = clothesService.test();
+        return ResponseEntity.status(HttpStatus.OK).body(responseClothes);
+    }
+
     @GetMapping("/public/clothes/all")
     public ResponseEntity<Page<ResponseClothes>> viewAllClothes(
             Pageable pageable, HttpServletRequest request) {

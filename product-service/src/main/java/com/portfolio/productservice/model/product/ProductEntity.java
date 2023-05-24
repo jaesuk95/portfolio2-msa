@@ -21,7 +21,7 @@ public class ProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int stock;
-    private LocalDateTime registeredDate;
+//    private LocalDateTime registeredDate;
     private int price;
     private String userId;
     // for registration
@@ -34,7 +34,7 @@ public class ProductEntity {
 
     public ProductEntity(int stock, LocalDateTime registeredDate, int price, String userId, String companyName, String productId) {
         this.stock = stock;
-        this.registeredDate = registeredDate;
+//        this.registeredDate = registeredDate;
         this.price = price;
         this.userId = userId;
         this.companyName = companyName;

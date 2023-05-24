@@ -77,6 +77,24 @@ public class ClothesServiceImpl implements ClothesService {
         return new PageImpl<>(responseList, clothesDto.getPageable(), clothesDto.getTotalPages());
     }
 
+    @Override
+    public ResponseClothes test() {
+        ClothesDto clothesDto = new ClothesDto();
+        clothesDto.setClothesType(ClothesType.shirt);
+        clothesDto.setLengthType(LengthType.longLength);
+        clothesDto.setStock(10);
+//        clothesDto.setRegisteredDate(LocalDateTime.now());
+        clothesDto.setPrice(1000);
+        clothesDto.setUser_id("1");
+        clothesDto.setCompanyName("companyName");
+        clothesDto.setProductId("productId");
+        clothesDto.setId(1L);
+        clothesDto.setType("PRODUCT_CLOTHES");
+
+        kafkaClothesProducer.send("product",clothesDto);
+        return null;
+    }
+
     private final KafkaClothesProducer kafkaClothesProducer;
 
 
