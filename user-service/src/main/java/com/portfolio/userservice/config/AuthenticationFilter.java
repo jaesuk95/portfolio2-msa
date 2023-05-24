@@ -58,13 +58,11 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
         // 여기 아래있는 User 는 spring security 에서 제공하는 User,
         // attemptAuthentication -> UserServiceImpl.loadUserByUsername -> successfulAuthentication
         log.debug(((User)authResult.getPrincipal()).getUsername());
-
         String username = ((User) authResult.getPrincipal()).getUsername();
         UserDto userDetails = userService.getUserDetailsByEmail(username);
 
         String token = Jwts.builder()
                 .setSubject(userDetails.getUserId())
-                .claim("user_id",userDetails.getUserId())
                 .claim("user_role",userDetails.getRole().toString())
                 .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(env.getProperty("token.expiration_time"))))
                 .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))

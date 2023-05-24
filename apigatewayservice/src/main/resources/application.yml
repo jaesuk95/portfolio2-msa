@@ -36,12 +36,6 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/user-service/public/**
-
-
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
             - Path=/api/user-service/auth/**
 
         - id: user-service
@@ -50,6 +44,12 @@ spring:
             - Path=/api/user-service/profile/**
           filters:
             - AuthorizationHeaderFilter
+
+#       Testing
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/user-service/public/**
 
         - id: user-service
           uri: lb://USER-SERVICE

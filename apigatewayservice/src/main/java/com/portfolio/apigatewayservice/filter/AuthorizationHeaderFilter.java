@@ -65,14 +65,10 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
     private boolean isJwtValid(String jwt) {
         boolean returnValue = true;
 
-        String property = env.getProperty("token.secret");
-        String subject = null;
+        Claims claims = null;
         try {
-            subject = Jwts.parser().setSigningKey(env.getProperty("token.secret"))
-                    .parseClaimsJws(jwt).getBody()
-                    .getSubject();
 
-            Claims claims = Jwts.parser()
+            claims = Jwts.parser()
                     .setSigningKey(env.getProperty("token.secret"))
                     .parseClaimsJws(jwt)
                     .getBody();
@@ -85,7 +81,7 @@ public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<Auth
             returnValue = false;
         }
 
-        if (subject == null || subject.isEmpty()) {
+        if (claims == null || claims.isEmpty()) {
             returnValue = false;
         }
 
