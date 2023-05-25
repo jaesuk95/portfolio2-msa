@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class KafkaProductConsumer {
 
     private final ProductRepository productRepository;
@@ -26,11 +26,6 @@ public class KafkaProductConsumer {
     @KafkaListener(topics = "product_purchase_update")
     public void processProductUpdate(String kafkaMessage) {
         log.info("Kafka message: => {}", kafkaMessage);
-
-        // from order-service
-        //     List<Field> fields = Arrays.asList(
-        //            new Field("string", true, "product_id"),
-        //            new Field("int32", true, "qty"));
 
         Map<Object, Object> map = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
