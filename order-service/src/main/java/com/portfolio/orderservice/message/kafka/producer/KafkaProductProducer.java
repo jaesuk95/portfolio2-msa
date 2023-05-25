@@ -3,9 +3,9 @@ package com.portfolio.orderservice.message.kafka.producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.orderservice.message.dto.Field;
-import com.portfolio.orderservice.message.dto.KafkaOrderDto;
-import com.portfolio.orderservice.message.dto.Payload;
 import com.portfolio.orderservice.message.dto.Schema;
+import com.portfolio.orderservice.message.dto.product.KafkaProductDto;
+import com.portfolio.orderservice.message.dto.product.Payload;
 import com.portfolio.orderservice.model.OrderDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class KafkaProductProducer {
 
     List<Field> fields = Arrays.asList(
             new Field("string", true, "product_id"),
-            new Field("int32", true, "qty"));
+            new Field("int32", true, "stock"));
 
     Schema schema = Schema.builder()
             .type("struct")
@@ -37,15 +37,15 @@ public class KafkaProductProducer {
         // create payload
         Payload payload = Payload.builder()
                 .product_id(orderDto.getProductId())
-                .qty(orderDto.getQty())
+                .stock(orderDto.getQty())
                 .build();
 
-        KafkaOrderDto kafkaOrderDto = new KafkaOrderDto(schema,payload);
+        KafkaProductDto kafkaProductDto = new KafkaProductDto(schema,payload);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = "";
         try {
-            jsonInString = mapper.writeValueAsString(kafkaOrderDto);
+            jsonInString = mapper.writeValueAsString(kafkaProductDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

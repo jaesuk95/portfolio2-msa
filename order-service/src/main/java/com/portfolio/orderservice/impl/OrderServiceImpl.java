@@ -37,21 +37,31 @@ public class OrderServiceImpl implements OrderService {
     public ResponseOrder registerUserOrder(RequestOrder requestOrder) {
         String user_id = requestOrder.getUser_id();
         String productId = requestOrder.getProductId();
+        ResponseOrder responseOrder = new ResponseOrder();
 
         log.info("Before call orders microservice");
         CircuitBreaker circuitbreaker = circuitBreakerFactory.create("circuitBreaker");
-        ResponseProduct responseProduct = (ResponseProduct) circuitbreaker.run(() -> productServiceClient.productAvailable(productId),
-                throwable -> new ArrayList<>());// <- throwable -> new ArrayList<>() 이 코드의 뜻은, orderServiceClient.getOrders(id) 에서 오류가 발생하면 비어있는 arrayList[] 으로 반환한다는 뜻이다.
+        ResponseProduct responseProduct = (ResponseProduct) circuitbreaker.run(() ->
+                        productServiceClient.productAvailable(productId),
+                throwable -> new ArrayList<>());// throwable -> new ArrayList<>() 이 코드의 뜻은, productServiceClient.productAvailable(id) 에서 오류가 발생하면 비어있는 arrayList[] 으로 반환한다는 뜻이다.
         log.info("After called orders microservice");
+
+        if (responseProduct == null) {
+            responseOrder.setMessage("Server Error");
+            responseOrder.setStatus(500);
+            responseOrder.setProductId(productId);
+            return responseOrder;
+        }
 
         // if the product is out of stock
         if (responseProduct.getStatus() == 400) {
-            ResponseOrder responseOrder = new ResponseOrder();
             responseOrder.setMessage(responseOrder.getMessage());
             responseOrder.setStatus(responseOrder.getStatus());
             responseOrder.setProductId(responseOrder.getProductId());
             return responseOrder;
         }
+
+
 
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);

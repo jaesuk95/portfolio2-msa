@@ -54,20 +54,7 @@ public class KafkaClothesProducer {
             e.printStackTrace();
         }
 
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(kafkaTopic, jsonInString);
-
-        future.whenComplete((result, exception) -> {
-            if (exception == null) {
-                // Message was successfully sent
-                // Handle the SendResult if needed
-                log.info("Message has been successfully sent");
-                future.isDone();
-            } else {
-                // Error occurred during message sending
-                // Handle the exception if needed
-                log.error("Message denied from Clothes registration");
-                future.completeExceptionally(exception);
-            }
-        });
+        kafkaTemplate.send(kafkaTopic, jsonInString);
+        log.info("KAFKA 'clothes' message has been successfully sent");
     }
 }

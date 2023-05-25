@@ -60,24 +60,9 @@ public class KafkaProductProducer {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-//        kafkaTemplate.send(kafkaTopic, jsonInString);
 
         // ListenableFutureCallback is added to handle success and failure cases asynchronously.
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(kafkaTopic, jsonInString);
-
-        future.whenComplete((result, exception) -> {
-            if (exception == null) {
-                // Message was successfully sent
-                // Handle the SendResult if needed
-                log.info("Message has been successfully sent");
-                future.isDone();
-            } else {
-                // Error occurred during message sending
-                // Handle the exception if needed
-                log.error("Message denied from Product registration");
-                future.completeExceptionally(exception);
-            }
-        });
-
+        kafkaTemplate.send(kafkaTopic, jsonInString);
+        log.info("KAFKA 'product' message has been successfully sent");
     }
 }
