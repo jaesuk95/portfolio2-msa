@@ -11,9 +11,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(name = "ID")      // product 의 아이디를 참조한다.
-@DiscriminatorValue("PRODUCT_SHOES")
-public class Shoes extends ProductEntity {
+//@PrimaryKeyJoinColumn(name = "ID")      // product 의 아이디를 참조한다.
+//@DiscriminatorValue("PRODUCT_SHOES")
+//public class Shoes extends ProductEntity {
+public class Shoes {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private ShoesType shoesType;

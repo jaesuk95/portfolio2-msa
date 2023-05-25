@@ -5,6 +5,7 @@ import com.portfolio.productservice.controller.response.ResponseClothes;
 import com.portfolio.productservice.controller.response.ResponseProduct;
 import com.portfolio.productservice.model.product.ProductService;
 import com.portfolio.productservice.model.product.clothes.ClothesService;
+import com.portfolio.productservice.model.product.clothes.ClothesType;
 import com.portfolio.productservice.model.product.clothes.dto.ProductClothesDto;
 import io.micrometer.core.annotation.Timed;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,6 +44,7 @@ public class ProductServiceController {
             HttpServletRequest request, @RequestBody RequestClothes requestClothes) {
         try {
             ModelMapper mapper = new ModelMapper();
+//            requestClothes.setClothesType(ClothesType.valueOf(requestClothes.getClothesType()));
             ProductClothesDto productClothesDto = mapper.map(requestClothes, ProductClothesDto.class);
 
             ResponseClothes returnValue = clothesService.registerClothes(productClothesDto);

@@ -1,4 +1,4 @@
-package com.portfolio.productservice.message.dto.payload;
+package com.portfolio.productservice.message.dto.clothes;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClothesPayload {
+public class Payload {
     private String clothes_type;
     private String length_type;
     private Long product_entity_id;

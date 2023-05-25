@@ -1,21 +1,17 @@
 package com.portfolio.productservice.impl;
 
-import com.google.common.util.concurrent.ListenableFuture;
 import com.portfolio.productservice.controller.response.ResponseClothes;
 import com.portfolio.productservice.controller.response.ResponseCompany;
 import com.portfolio.productservice.feign.UserServiceClient;
-import com.portfolio.productservice.message.dto.KafkaClothesDto;
-import com.portfolio.productservice.message.dto.KafkaProductDto;
+import com.portfolio.productservice.message.dto.clothes.KafkaClothesDto;
+import com.portfolio.productservice.message.dto.product.KafkaProductDto;
 import com.portfolio.productservice.message.kafka.producer.KafkaClothesProducer;
 import com.portfolio.productservice.message.kafka.producer.KafkaProductProducer;
-import com.portfolio.productservice.model.product.ProductDto;
-import com.portfolio.productservice.model.product.ProductEntity;
 import com.portfolio.productservice.model.product.ProductRepository;
 import com.portfolio.productservice.model.product.clothes.*;
 import com.portfolio.productservice.model.product.clothes.dto.ProductClothesDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
@@ -24,15 +20,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
-import org.apache.kafka.clients.producer.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j

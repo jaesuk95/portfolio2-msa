@@ -1,4 +1,4 @@
-package com.portfolio.productservice.message.dto;
+package com.portfolio.productservice.message.dto.clothes;
 
 
 import lombok.AllArgsConstructor;

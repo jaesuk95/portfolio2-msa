@@ -3,7 +3,9 @@ package com.portfolio.productservice.message.kafka.producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.productservice.message.dto.*;
-import com.portfolio.productservice.message.dto.payload.ClothesPayload;
+import com.portfolio.productservice.message.dto.clothes.KafkaClothesDto;
+import com.portfolio.productservice.message.dto.clothes.KafkaProducerClothes;
+import com.portfolio.productservice.message.dto.clothes.Payload;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -36,13 +38,13 @@ public class KafkaClothesProducer {
 
     public void send(String kafkaTopic, KafkaClothesDto kafkaClothesDto) {
         // create payload
-        ClothesPayload clothesPayload = ClothesPayload.builder()
+        Payload payload = Payload.builder()
                 .clothes_type(kafkaClothesDto.getClothesType())
                 .length_type(kafkaClothesDto.getLengthType())
                 .product_entity_id(kafkaClothesDto.getProduct_entity_id())
                 .build();
 
-        KafkaProducerClothes kafkaProducerClothes = new KafkaProducerClothes(schema, clothesPayload);
+        KafkaProducerClothes kafkaProducerClothes = new KafkaProducerClothes(schema, payload);
 
         String jsonInString = "";
         ObjectMapper objectMapper = new ObjectMapper();

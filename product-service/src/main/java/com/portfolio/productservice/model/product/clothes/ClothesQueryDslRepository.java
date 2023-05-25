@@ -19,13 +19,13 @@ public class ClothesQueryDslRepository extends Querydsl4RepositorySupport {
         return applyPagination(pageable, contentQuery -> contentQuery
                 .select(Projections.bean(ProductClothesDto.class,
                         QClothes.clothes.id,
-                        QClothes.clothes.stock,
-                        QClothes.clothes.registeredDate,
+//                        QClothes.clothes.stock,
+//                        QClothes.clothes.registeredDate,
                         QClothes.clothes.lengthType,
-                        QClothes.clothes.clothesType,
-                        QClothes.clothes.price,
-                        QClothes.clothes.companyName,
-                        QClothes.clothes.productId
+                        QClothes.clothes.clothesType
+//                        QClothes.clothes.price,
+//                        QClothes.clothes.companyName,
+//                        QClothes.clothes.productId
                 ))
                 .from(QClothes.clothes)
                 .where()

@@ -10,11 +10,17 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Table(name = "clothes")
 @AllArgsConstructor
 @NoArgsConstructor
 //@PrimaryKeyJoinColumn(name = "ID")
-@DiscriminatorValue("PRODUCT_CLOTHES")
-public class Clothes extends ProductEntity {
+//@DiscriminatorValue("PRODUCT_CLOTHES")
+//public class Clothes extends ProductEntity {
+public class Clothes {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private ClothesType clothesType;
@@ -28,10 +34,10 @@ public class Clothes extends ProductEntity {
     private ProductEntity product;
 
 
-    public Clothes(int stock, LocalDateTime registeredDate, ClothesType clothesType, LengthType lengthType, int price, String userId, String companyName, String productId) {
-        super(stock, registeredDate, price, userId, companyName, productId);
-        this.clothesType = clothesType;
-        this.lengthType = lengthType;
-    }
+//    public Clothes(int stock, LocalDateTime registeredDate, ClothesType clothesType, LengthType lengthType, int price, String userId, String companyName, String productId) {
+//        super(stock, registeredDate, price, userId, companyName, productId);
+//        this.clothesType = clothesType;
+//        this.lengthType = lengthType;
+//    }
 
 }

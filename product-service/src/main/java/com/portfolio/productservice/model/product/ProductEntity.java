@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 //@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING)
+//@DiscriminatorColumn(name = "TYPE", discriminatorType = DiscriminatorType.STRING)
 public class ProductEntity {
 
     @Id
@@ -27,6 +27,7 @@ public class ProductEntity {
     private String userId;
     private String companyName;
     private String productId;
+    private String type;
 
     public void purchaseUpdate(int stock) {
         this.stock -= stock;

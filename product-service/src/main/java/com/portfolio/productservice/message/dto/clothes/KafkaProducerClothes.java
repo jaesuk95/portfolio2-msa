@@ -1,6 +1,6 @@
-package com.portfolio.productservice.message.dto;
+package com.portfolio.productservice.message.dto.clothes;
 
-import com.portfolio.productservice.message.dto.payload.ClothesPayload;
+import com.portfolio.productservice.message.dto.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,5 +14,5 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class KafkaProducerClothes implements Serializable {
     private Schema schema;
-    private ClothesPayload clothesPayload;
+    private Payload payload;
 }

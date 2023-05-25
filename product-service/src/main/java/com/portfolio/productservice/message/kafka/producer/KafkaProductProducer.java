@@ -2,33 +2,16 @@ package com.portfolio.productservice.message.kafka.producer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.portfolio.productservice.message.dto.Field;
-import com.portfolio.productservice.message.dto.KafkaProducerProduct;
-import com.portfolio.productservice.message.dto.KafkaProductDto;
-import com.portfolio.productservice.message.dto.payload.ProductPayload;
+import com.portfolio.productservice.message.dto.product.KafkaProducerProduct;
+import com.portfolio.productservice.message.dto.product.KafkaProductDto;
+import com.portfolio.productservice.message.dto.product.Payload;
 import com.portfolio.productservice.message.dto.Schema;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.annotation.TopicPartition;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.KafkaHeaders;
-import org.springframework.kafka.support.SendResult;
-import org.springframework.messaging.handler.annotation.Header;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +42,7 @@ public class KafkaProductProducer {
 
     public void send(String kafkaTopic, KafkaProductDto productDto) {
         // create payload
-        ProductPayload productPayload = ProductPayload.builder()
+        Payload payload = Payload.builder()
                 .stock(productDto.getStock())
                 .price(productDto.getPrice())
                 .user_id(productDto.getUserId())
@@ -68,7 +51,7 @@ public class KafkaProductProducer {
                 .type(productDto.getType())
                 .build();
 
-        KafkaProducerProduct kafkaProducerProduct = new KafkaProducerProduct(schema, productPayload);
+        KafkaProducerProduct kafkaProducerProduct = new KafkaProducerProduct(schema, payload);
 
         String jsonInString = "";
         ObjectMapper objectMapper = new ObjectMapper();
@@ -77,6 +60,7 @@ public class KafkaProductProducer {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+//        kafkaTemplate.send(kafkaTopic, jsonInString);
 
         // ListenableFutureCallback is added to handle success and failure cases asynchronously.
         CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(kafkaTopic, jsonInString);

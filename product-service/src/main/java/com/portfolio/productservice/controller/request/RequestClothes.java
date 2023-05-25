@@ -13,12 +13,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class RequestClothes {
     private Integer stock;
-    private LocalDateTime registeredDate;
+//    private LocalDateTime registeredDate;
     @Enumerated(EnumType.STRING)
     private LengthType lengthType;
     @Enumerated(EnumType.STRING)
     private ClothesType clothesType;
+
+//    private String lengthType;
+//    private String clothesType;
     private int price;
     private String user_id;
     private String companyName;
+    private String type;
 }

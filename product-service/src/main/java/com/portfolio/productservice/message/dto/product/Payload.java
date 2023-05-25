@@ -1,4 +1,4 @@
-package com.portfolio.productservice.message.dto.payload;
+package com.portfolio.productservice.message.dto.product;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductPayload {
+public class Payload {
     private int stock;
     private int price;
     private String user_id;
