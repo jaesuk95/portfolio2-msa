@@ -10,14 +10,13 @@ spring:
     #    username: sa
     #    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/portfolio2
     url: jdbc:mysql://localhost:3306/portfolio2_product
     username: root
     password: admin
-#    url: jdbc:h2:mem:testdb
-#    driver-class-name: org.h2.Driver
-#    username: sa
-#    password:
+  #    url: jdbc:h2:mem:testdb
+  #    driver-class-name: org.h2.Driver
+  #    username: sa
+  #    password:
   h2:
     console:
       enabled: true
@@ -50,7 +49,7 @@ spring:
 eureka:
   instance:
     #    loadBalancing technique
-#    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+    #    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
     prefer-ip-address: true
   client:
