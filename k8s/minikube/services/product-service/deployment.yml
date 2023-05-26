@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product
+spec:
+  selector:
+    matchLabels:
+      app: product
+  template:
+    metadata:
+      labels:
+        app: product
+    spec:
+      containers:
+      - name: product
+        image: jaesuk95/portfolio-product-service:0.0.3
+        imagePullPolicy: Always
+        env:
+          - name: SPRING_CLOUD_CONFIG_URI
+            value: "http://config-service:8888"
+
+          - name: EUREKA_CLIENT_ENABLED
+            value: "true"
+
+          - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
+            value: "http://discovery-service:8761/eureka"
+
+          - name: SPRING_RABBITMQ_HOST
+            value: "rabbitmq"
+
+          - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
+            value: "http://zipkin:9411/api/v2/spans"
+
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:mysql://192.168.0.4:3306/portfolio2_product"
+
+        ports:
+        - containerPort: 8080
