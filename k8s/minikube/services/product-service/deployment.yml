@@ -11,6 +11,7 @@ spec:
       labels:
         app: product
     spec:
+      hostNetwork: true
       containers:
       - name: product
         image: jaesuk95/portfolio-product-service:0.0.3

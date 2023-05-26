@@ -44,6 +44,8 @@ spring:
     port: 5672
     username: guest
     password: guest
+  kafka:
+    bootstrap-servers: 192.168.0.4:9092
 
 eureka:
   instance:
