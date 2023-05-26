@@ -11,13 +11,9 @@ spec:
       labels:
         app: user
     spec:
-        # resources:
-        #   limits:
-        #     memory: "128Mi"
-        #     cpu: "500m"
       containers:
       - name: user
-        image: jaesuk95/portfolio-user-service:0.0.10
+        image: jaesuk95/portfolio-user-service:0.0.11
         imagePullPolicy: Always
         env:
           - name: SPRING_CLOUD_CONFIG_URI
@@ -32,5 +28,8 @@ spec:
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
             
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:mysql://192.168.0.4:3306/portfolio2_user"
+
         ports:
         - containerPort: 8080

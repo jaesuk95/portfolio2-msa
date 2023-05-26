@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: order
-        image: jaesuk95/portfolio-order-service:0.0.7
+        image: jaesuk95/portfolio-order-service:0.0.8
         imagePullPolicy: Always
         env:
           - name: SPRING_CLOUD_CONFIG_URI
@@ -31,8 +31,8 @@ spec:
           - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
             value: "http://zipkin:9411/api/v2/spans"
 
-          - name: APP_KAFKAURL
-            value: "10.107.54.84:9092"
+          - name: SPRING_DATASOURCE_URL
+            value: "jdbc:mysql://192.168.0.4:3306/portfolio2_order"
 
         ports:
         - containerPort: 8080
