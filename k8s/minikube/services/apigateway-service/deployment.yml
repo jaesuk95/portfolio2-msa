@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: apigateway-service
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: apigateway-service

@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: product
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: product
@@ -14,7 +15,7 @@ spec:
       hostNetwork: true
       containers:
       - name: product
-        image: jaesuk95/portfolio-product-service:0.0.8
+        image: jaesuk95/portfolio-product-service:0.0.9
         imagePullPolicy: Always
         env:
           - name: SPRING_CLOUD_CONFIG_URI
@@ -34,6 +35,9 @@ spec:
 
           - name: SPRING_DATASOURCE_URL
             value: "jdbc:mysql://192.168.0.4:3306/portfolio2_product"
+
+          - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
+            value: "192.168.0.4:9092"
 
         ports:
         - containerPort: 8080
