@@ -19,18 +19,18 @@ spec:
         env:
           - name: SPRING_CLOUD_CONFIG_URI
             value: "http://config-service:8888"
-            
           - name: EUREKA_CLIENT_ENABLED
             value: "true"
-
           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
             value: "http://discovery-service:8761/eureka"
-
           - name: SPRING_RABBITMQ_HOST
             value: "rabbitmq"
-            
           - name: SPRING_DATASOURCE_URL
             value: "jdbc:mysql://192.168.0.4:3306/portfolio2_user"
-
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysecret
+                key: dbsecret
         ports:
         - containerPort: 8080

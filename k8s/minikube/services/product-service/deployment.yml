@@ -39,5 +39,11 @@ spec:
           - name: SPRING_KAFKA_BOOTSTRAP-SERVERS
             value: "192.168.0.4:9092"
 
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysecret
+                key: dbsecret
+
         ports:
         - containerPort: 8080

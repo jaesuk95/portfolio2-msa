@@ -35,5 +35,10 @@ spec:
           - name: SPRING_DATASOURCE_URL
             value: "jdbc:mysql://192.168.0.4:3306/portfolio2_order"
 
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysecret
+                key: dbsecret
         ports:
         - containerPort: 8080
