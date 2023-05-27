@@ -23,6 +23,7 @@ public class KafkaConsumerConfig {
     public ConsumerFactory<String, String> consumerFactory() {
         HashMap<String, Object> properties = new HashMap<>();
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+//        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.0.4:9092");
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "consumerGroupId");
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);

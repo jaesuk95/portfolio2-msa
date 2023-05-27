@@ -62,7 +62,17 @@ public class KafkaProductProducer {
         }
 
         // ListenableFutureCallback is added to handle success and failure cases asynchronously.
-        kafkaTemplate.send(kafkaTopic, jsonInString);
-        log.info("KAFKA 'product' message has been successfully sent");
+//        kafkaTemplate.send(kafkaTopic, jsonInString);
+        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(kafkaTopic, jsonInString);
+        future.whenComplete((result, exception) -> {
+            if (exception == null) {
+                log.debug("Kafka message sent successfully: {}", result.getRecordMetadata());
+                // Database update is expected to occur after successful Kafka message delivery
+                // Add log statements to indicate the update operation
+                log.info("KAFKA 'product' message has been successfully sent");
+            } else {
+                log.error("Failed to send Kafka message: {}", exception.getMessage());
+            }
+        });
     }
 }

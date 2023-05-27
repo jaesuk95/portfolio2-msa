@@ -24,10 +24,10 @@ spec:
             value: "true"
 
           - name: EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE
-            value: "http://discovery-service:8761/eureka"
+            value: "http://10.100.196.29:8761/eureka"
 
           - name: SPRING_RABBITMQ_HOST
-            value: "rabbitmq"
+            value: "10.110.244.220"
 
           - name: MANAGEMENT_ZIPKIN_TRACING_ENDPOINT
             value: "http://zipkin:9411/api/v2/spans"

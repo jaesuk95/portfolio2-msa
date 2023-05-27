@@ -7,6 +7,7 @@ import com.portfolio.productservice.message.dto.clothes.KafkaClothesDto;
 import com.portfolio.productservice.message.dto.product.KafkaProductDto;
 import com.portfolio.productservice.message.kafka.producer.KafkaClothesProducer;
 import com.portfolio.productservice.message.kafka.producer.KafkaProductProducer;
+import com.portfolio.productservice.model.product.ProductEntity;
 import com.portfolio.productservice.model.product.ProductRepository;
 import com.portfolio.productservice.model.product.clothes.*;
 import com.portfolio.productservice.model.product.clothes.dto.ProductClothesDto;
@@ -75,11 +76,12 @@ public class ClothesServiceImpl implements ClothesService {
 
         kafkaProductProducer.send("product", kafkaProductDto);
 
-        KafkaClothesDto kafkaClothesDto = new KafkaClothesDto(
-                productClothesDto.getLengthType().toString(),
-                productClothesDto.getClothesType().toString(),
-                productRepository.findByProductId(productClothesDto.getProductId()).getId()
-        );
+        ProductEntity productEntity = productRepository.findByProductId(productClothesDto.getProductId());
+
+        KafkaClothesDto kafkaClothesDto = KafkaClothesDto.builder().build();
+        kafkaClothesDto.setClothesType(productClothesDto.getClothesType().toString());
+        kafkaClothesDto.setLengthType(productClothesDto.getLengthType().toString());
+        kafkaClothesDto.setProduct_entity_id(productEntity.getId());
 
         kafkaClothesProducer.send("clothes", kafkaClothesDto);
 
