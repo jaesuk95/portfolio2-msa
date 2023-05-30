@@ -20,6 +20,14 @@ spec:
         #     memory: "128Mi"
         #     cpu: "500m"
         env:
+          - name: SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME
+            valueFrom:
+              name: mysecret
+              key: git-username
+          - name: SPRING_CLOUD_CONFIG_SERVER_GIT_PASSWORD
+            valueFrom:
+              name: mysecret
+              key: git-password
           - name: SPRING_RABBITMQ_HOST
             # value: "10.98.240.176"
             value: "rabbitmq"
